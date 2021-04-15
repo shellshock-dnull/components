@@ -1,0 +1,50 @@
+galaxy_info:
+  author: Bohdan Sukhomlinov
+  description: Component-oriented role
+  role_name: components
+
+  issue_tracker_url: https://gitlab.com/ues/ansible/components/-/issues
+
+  license: Apache License, Version 2.0
+
+  min_ansible_version: 2.7
+
+  platforms:
+  - name: Alpine
+    versions:
+      - any
+  - name: Amazon
+    versions:
+      - 2018.03
+  - name: Amazon Linux 2
+    versions:
+      - any
+  - name: Debian
+    versions:
+      - buster
+  - name: EL
+    versions:
+      - 7
+      - 8
+  - name: FreeBSD
+    versions:
+      - 11.2
+      - 12.1
+  - name: Ubuntu
+    versions:
+      - xenial
+      - bionic
+      - focal
+      - groovy
+  - name: SLES
+    versions:
+      - 12
+      - 15
+
+  galaxy_tags:
+    - install
+    - configure
+    - template
+    - dotfiles
+
+dependencies: []

@@ -1,0 +1,33 @@
+---
+# TEMPLATE
+- block:
+  # - name: "[zip_template] {{ name|upper }} local debug"
+  #   debug:
+  #     msg: "{{ templates[ztemplate].zip | to_nice_json }}"
+  #     verbosity: 1
+
+  - set_fact:
+      ztemplateObj: "{{ templates[ztemplate].zip | default({}) }}"
+      
+
+  - name: "[zip_template] {{ name|upper }} template folder"
+    file:
+      path:  "{{ template.config | dirname }}"
+      state: directory
+    with_items: "{{ ztemplateObj }}"
+    loop_control:
+      loop_var: template
+
+
+  - name: "[zip_template] {{ name|upper }} template"
+    no_log:  "{{ template.no_log | default(false) }}"
+    template:
+      dest:  "{{ template.config   }}"
+      src:   "{{ template.template }}"
+      owner: "{{ template.owner   | default(role_component.user)   }}"
+      group: "{{ template.group   | default(role_component.user)   }}"
+      mode:  "{{ template.mode    | default(role_component.mode)   }}"
+      backup: "{{ template.backup | default(role_component.backup) }}"
+    with_items: "{{ ztemplateObj }}"
+    loop_control:
+      loop_var: template

@@ -1,0 +1,18 @@
+---
+# CMD
+- block:
+  - name: "[sh] {{ component.name|upper }} - {{ type }}-{{ prefix }} check"
+    shell: "{{ cmd }}"
+    ignore_errors: true
+    register: cmd_std
+
+  - name: "[sh] {{ component.name|upper }} - {{ type }}-{{ prefix }} check - [{{ cmd }}] STDOUT"
+    debug:
+      msg: "{{ cmd_std.stdout }}"
+    when: cmd_std.stdout is defined
+  - name: "[sh] {{ component.name|upper }} - {{ type }}-{{ prefix }} check - [{{ cmd }}] STDERR"
+    debug:
+      msg: "{{ cmd_std.stderr }}"
+    when: cmd_std.stderr is defined
+  tags:
+    - component_cmd

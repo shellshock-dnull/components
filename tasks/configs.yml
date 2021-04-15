@@ -1,0 +1,71 @@
+---
+# CONFIGS
+- block:
+  - name: "[config] {{ name|upper }} local debug"
+    debug:
+      msg: "{{ configsObj | to_nice_json }}"
+      verbosity: 1
+
+  - name: "[config] {{ name|upper }} local facts"
+    set_fact:
+      configs_templates:            "{{ configsObj.templates       | default([]) }}"
+      configs_templates_variables:  "{{ configsObj.variables       | default([]) }}"
+      configs_pre:           "{{ configsObj.pre            | default([]) }}"
+      configs_post:          "{{ configsObj.post           | default([]) }}"
+      handler_config:            "{{ configsObj.handler            | default('systemd') }}"
+      handler_config_reload:     "{{ configsObj.handler_reload     | default(name) }}"
+
+
+  # CONFIGS - PRE CMD
+  - include_tasks: cmd.yml
+    vars:
+      type: pre
+      prefix: configs
+      content: "{{ configs_pre }}"
+    when: configs_pre
+    loop_control:
+      loop_var: cmd
+
+  # Template itself: role_component[item].config
+  - name: "[config] {{ name|upper }} config"
+    include_tasks: template.yml
+    vars:
+      handler_type: config
+      handler_component: "{{ handler_config }}"
+      handler_reload: "{{ handler_config_reload }}"
+      var: "{{ configs_templates_variables }}"
+    with_items:
+      - "{{ configs_templates }}"
+    loop_control:
+      loop_var: template
+      
+  # ZIP #Template itself: role_component[item].config
+  #   zip:
+  #   - config: "{{ c }}/nvim/editor.vim"
+  #     template: "{{ t }}/nvim_editor.vim"
+  #     values: "{{ v }}/nvim.yml"
+  - name: "[config] {{ name|upper }} zip config"
+    include_tasks: templates.yml
+    vars:
+      handler_type: config
+      handler_component: "{{ handler_config }}"
+      handler_reload: "{{ handler_config_reload }}"
+      var: "{{ configs_templates_variables }}"
+    with_items:
+      - "{{ configs_templates }}"
+    loop_control:
+      loop_var: ztemplate
+
+  # CONFIGS - POST CMD
+  - include_tasks: cmd.yml
+    vars:
+      type: post
+      prefix: configs
+      content: "{{ configs_post }}"
+    with_items: "{{ configs_post }}"
+    when: configs_post
+    loop_control:
+      loop_var: cmd
+  - meta: flush_handlers
+
+  tags: configs

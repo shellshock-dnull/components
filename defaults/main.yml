@@ -1,0 +1,17 @@
+# TODO: Escaping double curly braces in Ansible https://stackoverflow.com/questions/32279519/escaping-double-curly-braces-in-ansible
+
+tag: []
+output: ""
+
+# ROLE COMPONENT
+role_component:
+  backup: true
+  render_dir: "{{ playbook_dir }}/component_rendered_tasks"
+  yaml_with_includes: true
+  force_restart:  false
+  ignore_errors:  true
+  components:     []
+  user:   "{{ ansible_user }}"
+  group:  "{{ ansible_user }}"
+  mode:   644
+  run:    systemd
