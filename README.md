@@ -8,7 +8,7 @@ Idea
 
 Main idea behind this role is to abstract instaliation and configuration of softwave by COMPONENTS. 
 
-What do we think about installing, for example (Polybar)[https://github.com/polybar/polybar]? Polybar is status bar. OK! How do I start using Polybar? By installing, configuring and running it, ofcourse. From now, lets make abstraction about Polybar as a **component**: 
+What do we think about installing, for example [Polybar](https://github.com/polybar/polybar)? Polybar is status bar. OK! How do I start using Polybar? By installing, configuring and running it, ofcourse. From now, lets make abstraction about Polybar as a **component**: 
 - install 
   Describes HOW we should install Polybar (by package 'polybar')
 - config
