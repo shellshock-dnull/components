@@ -1,0 +1,167 @@
+---
+# TODO: install_git.item.update unable to use default statement
+# INSTALL
+- block:
+    - block:
+        - set_fact:
+            install_prefix: '{{ prefix }}[install]'
+            component_install_become: '{{ installObj.become | default(true)     }}'
+            component_install_packages: '{{ installObj.packages | default([])     }}'
+            component_install_brew: '{{ installObj.brew | default([])     }}'
+            component_install_pre: '{{ installObj.pre  | default([])     }}'
+            component_install_post: '{{ installObj.post | default([])     }}'
+        # Download direct from URL
+            component_install_download: '{{ installObj.download | default([])     }}'
+            component_install_download_become: '{{ installObj.download.become | default(false)     }}'
+        # Git
+            component_install_git: '{{ installObj.git | default([])     }}'
+        # Pip
+            component_install_pip: '{{ installObj.pip      | default([])     }}'
+        #  # npm
+        # component_install_npm:        "{{ installObj[npm]      | default([])     }}"
+        # component_install_npm_path:   "{{ installObj[npm][path] | default(role_component.npm.path)     }}"
+        # Gem
+        # component_install_gem:        "{{ installobj.gem      | default([])     }}"
+        # Flatpak
+        # component_install_flatpak:    "{{ installobj.flatpak  | default([])     }}"
+        # Stew
+            component_install_stew: '{{ installobj.stew     | default([])     }}'
+        # Repos
+            component_install_apt_keys: '{{ installObj.apt_keys | default([])     }}'
+            component_install_repos: '{{ installObj.repos    | default([])     }}'
+        # Install Raw handlers
+            component_install_become_cmd: '{{ installObj.become_cmd  | default(true)     }}'
+            component_install_raw_cmd: '{{ installObj.pre_cmd     | default([])     }}'
+            component_install_post_raw_cmd: '{{ installObj.port_cmd    | default([]) }}'
+        # Total Optional
+            component_install_virtualenv: '{{ installObj.virtualenv | default(role_component.pip.virtualenv) | default(omit) }}'
+            component_install_virtualenv_extra_args: '{{ installObj.virtualenv_extra_args   | default(omit) }}'
+            component_install_virtualenv_command: '{{ installObj.pip_virtualenv_command  | default(omit) }}'
+        - debug:
+            msg: '{{ installObj | to_nice_json }}'
+            verbosity: 2
+        - include_tasks: cmd.yml
+          vars:
+            prefix: install
+            type: pre
+            content: '{{ component_install_pre }}'
+          when: component_install_pre
+        - name: '{{ install_prefix }} RAW cmd [become:{{ component_install_become_cmd }}]'
+          become: '{{ component_install_become_cmd }}'
+          raw: '{{ item }}'
+          with_items: '{{ component_install_raw_cmd }}'
+          run_once: true
+        - name: '{{ install_prefix }} Adding apt keys'
+          become: '{{ component_install_become }}'
+          apt_key:
+            url: '{{ item.url }}'
+            state: '{{ item.state }}'
+          with_items: '{{ component_install_apt_keys }}'
+        - name: '{{ install_prefix }} Installing repos'
+          become: '{{ component_install_become }}'
+          apt_repository:
+            repo: '{{ item.repo }}'
+            state: '{{ item.state }}'
+            filename: '{{ item.filename }}'
+            update_cache: true
+          with_items: '{{ component_install_repos }}'
+        - name: '{{ install_prefix }} Downloading files from URL [become:{{ component_install_download_become }}]'
+          become: '{{ component_install_download_become }}'
+          get_url:
+            url: '{{ item.url  }}'
+            dest: '{{ item.dest }}'
+            mode: '{{ item.mode }}'
+          with_items: '{{ component_install_download }}'
+
+      # TODO: install: contifional become
+        - name: '{{ install_prefix }} Installing packages'
+          become: '{{ component_install_become }}'
+          package:
+            name: '{{ item }}'
+            state: present
+          with_items: '{{ component_install_packages }}'
+          when: ansible_distribution != 'MacOSX'
+        - name: '{{ install_prefix }} Installing brew packages'
+          community.general.homebrew:
+            name: '{{ item }}'
+            state: present
+          with_items: '{{ component_install_packages }}'
+          when: ansible_distribution == 'MacOSX'
+        - name: '{{ install_prefix }} Installing Git repos'
+          git:
+            repo: '{{ item.repo }}'
+            dest: '{{ item.dest }}'
+            key_file: '{{ item.keyfile | default(role_component.key_file) }}'
+            force: "{{ item.force | default('no') }}"
+            update: false # in var|default is used - got an error
+          with_items: '{{ component_install_git }}'
+    # PIP
+        - name: '{{ install_prefix }} Installing PIP packages [no_venv]'
+          pip:
+            name: '{{ item }}'
+            state: present
+          with_items: '{{ component_install_pip }}'
+          when: component_install_virtualenv is not defined or component_install_virtualenv
+            == ""
+          environment:
+            PATH: '{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}'
+        - name: '{{ install_prefix }} Installing PIP packages [venv:{{ component_install_virtualenv }}]'
+          pip:
+            name: '{{ item }}'
+            state: present
+            virtualenv: '{{ component_install_virtualenv | default(omit) }}'
+            virtualenv_command: '{{ component_install_virtualenv_command | default(omit) }}'
+            extra_args: '{{ component_install_virtualenv_extra_args | default(omit) }}'
+          with_items: '{{ component_install_pip }}'
+          when: component_install_virtualenv is defined and component_install_virtualenv
+            != ""
+          environment:
+            PATH: '{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}'
+    #  # NPM
+    # - name: "{{ install_prefix }} Installing NPM packages [path:{{ component_install_npm_path }}]"
+    #   npm:
+    #     name: "{{ item }}"
+    #     state: present
+    #     path: "{{ component_install_npm_path }}"
+    #   with_items: "{{ component_install_npm }}"
+    #   environment:
+    #     PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
+    # FLATPAK
+    # - name: "{{ install_prefix }} Installing FLATPAK packages"
+    #   flatpak:
+    #     name: "{{ item }}"
+    #     state: present
+    #   with_items: "{{ component_install_flatpak }}"
+    # STEW
+        - name: '{{ install_prefix }} Installing STEW packages'
+          shell: stew install {{ item }}
+          with_items: '{{ component_install_stew }}'
+    # - name: "{{ install_prefix }} Installing GEM packages"
+    #   become: true
+    #   gem:
+    #     name: "{{ item }}"
+    #     state: present
+    #     user_install: false
+    #   with_items: "{{ component_install_gem }}"
+    #   environment:
+    #     PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
+        - name: '{{ install_prefix }} post RAW cmd'
+          become: '{{ component_install_become }}'
+          raw: '{{ item }}'
+          with_items: '{{ component_install_post_raw_cmd }}'
+        - include_tasks: cmd.yml
+          vars:
+            prefix: install
+            type: post
+            content: '{{ component_install_post }}'
+          when: component_install_post
+    - file:
+        path: ~/.dnull
+        state: directory
+    - name: '{{ prefix }}[deps] Storing deps in ~/.dnull/{{ name }}'
+      copy:
+        dest: ~/.dnull/{{ name }}
+        content: |
+          {{ ansible_date_time.iso8601 }}
+      changed_when: false
+  tags: install

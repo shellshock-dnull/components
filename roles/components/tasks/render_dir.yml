@@ -1,0 +1,13 @@
+---
+- block:
+    - set_fact:
+        component_render_dir: '{{ role_component.render_dir }}/{{ inventory_hostname
+          }}/{{ name }}'
+        render_prefix: '{{ prefix }}[render]'
+    - name: '{{ render_prefix }} render folder'
+      become: false
+      file:
+        path: '{{ component_render_dir }}'
+        state: directory
+      delegate_to: localhost
+  tags: always

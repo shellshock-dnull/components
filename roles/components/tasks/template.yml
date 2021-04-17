@@ -1,0 +1,32 @@
+---
+# TEMPLATE
+- block:
+    - set_fact:
+        template_prefix: '{{ prefix }}[template]'
+        template_src: "{{ template.value.template | default('') }}"
+        template_dest: "{{ template.value.dest  | default('') }}"
+        template_owner: '{{ template.value.owner | default(role_component.user)  }}'
+        template_group: '{{ template.value.group | default(role_component.group) }}'
+        template_mode: '{{ template.value.mode  | default(role_component.mode)  }}'
+        template_type: "{{ template.value.type  | default('jinja')  }}"
+        template_no_log: '{{template.value.no_log| default(false)                }}'
+        template_backup: '{{template.value.backup| default(role_component.backup)}}'
+        template_become: '{{template.value.become| default(false)}}'
+        var: '{{template.value.variables|default({})}}'
+    - name: '{{ template_prefix }}[{{ template.key }}] dest folder'
+      file:
+        path: '{{ template.value.dest | dirname }}'
+        state: directory
+    # when: template_src
+    - name: '{{ template_prefix }}[{{ template.key }}] {{ template_dest }} {{ template_owner }}:{{
+        template_group }} {{ template_mode }}'
+      no_log: '{{ template_no_log}}'
+      template:
+        src: '{{ template_src   }}'
+        dest: '{{ template_dest  }}'
+        owner: '{{ template_owner }}'
+        group: '{{ template_group }}'
+        mode: '{{ template_mode  }}'
+        backup: '{{ template_backup }}'
+      become: '{{ template_become }}'
+    # when: template_src

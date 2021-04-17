@@ -1,0 +1,3 @@
+filter_plugins/__pycache__/
+.cache/
+*component_rendered_tasks*

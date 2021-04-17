@@ -1,0 +1,85 @@
+---
+# RUN!
+- block:
+    - set_fact:
+        run_prefix: '{{ prefix }}[run]'
+        init: "{{ runObj.init    | default('none') }}"
+        run: '{{ runObj.proc    | default(name) }}'
+        component_restart: '{{ runObj.restart | default(True) }}'
+        run_selinux: '{{ runObj.selinux      | default({}) }}'
+        run_pre: '{{ runObj.pre      | default([]) }}'
+        run_post: '{{ runObj.post     | default([]) }}'
+        run_selinux_permissive: '{{ runObj.selinux_permissive | default({}) }}'
+    - debug:
+        msg: '{{ runObj | to_nice_json }}'
+        verbosity: 2
+    - include_tasks: cmd.yml
+      vars:
+        type: pre
+        prefix: run
+        context: '{{ run_pre }}'
+      when: run_pre
+    # SELinux
+    # TODO: run seport
+  # - name: "{{ run_prefix }} selinux port"
+  #   seport: ports={{ selinux.port }} proto={{ selinux.proto }} setype={{ selinux.type }} state={{ selinux.state|default("present") }}
+    # with_items:
+    # - "{{ run_selinux }}"
+    # loop_control:
+    #   loop_var: selinux
+    # when: run_selinux
+  # - name: "{{ run_prefix }} selinux permissive"
+  #   selinux_permissive:
+  #     name: "{{ selinux_permissive.name }}"
+  #     permissive: "{{ selinux_permissive.permissive }}"
+  #   with_items:
+  #   - "{{ run_selinux_permissive }}"
+  #   loop_control:
+  #     loop_var: selinux_permissive
+  #   when: run_selinux_permissive
+    - block:
+      # SYSTEMD
+        - name: '{{ run_prefix }} systemd start'
+          systemd:
+            name: '{{ current_component_run }}'
+            state: '{% if component_restart|default(role_component.force_restart)
+              %}restarted{% else %}started{% endif %}'
+            enabled: true
+          with_items: ['{{ run }}']
+          loop_control:
+            loop_var: current_component_run
+          when: init == "systemd"
+      # SYSTEMD --USER
+        - name: '{{ run_prefix }} systemd --user start'
+          systemd:
+            name: '{{ current_component_run }}'
+            state: '{% if component_restart|default(role_component.force_restart)
+              %}restarted{% else %}started{% endif %}'
+            enabled: true
+            user: true
+          with_items: ['{{ run }}']
+          loop_control:
+            loop_var: current_component_run
+          when: init == "systemd-user"
+      # SHELL
+        - name: '{{ run_prefix }} shell start'
+          shell: '{{ current_component_run }}'
+          with_items: ['{{ run }}']
+          loop_control:
+            loop_var: current_component_run
+          when: init == "shell"
+      # NONE
+        - name: '{{ run_prefix }} Init:none - nothing to start [force_restart:{{ component_restart }}]'
+          debug:
+            msg: '{{ current_component_run }}'
+          with_items: ['{{ run }}']
+          loop_control:
+            loop_var: current_component_run
+          when: init == "none"
+    - include_tasks: cmd.yml
+      vars:
+        type: post
+        prefix: run
+        context: '{{ run_post }}'
+      when: run_post
+  tags: run

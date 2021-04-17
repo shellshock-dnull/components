@@ -1,0 +1,13 @@
+---
+namespace: dnullproject
+name: collections
+version: 2.0.0
+readme: README.md
+authors:
+  - shellshock1953
+description: Component-oriented role
+license_file: LICENSE
+tags: [dotfiles, configure, template, install]
+repository: https://github.com/dnullproject/collections
+documentation: https://github.com/dnullproject/collections/blob/master/README.md
+issues: https://github.com/dnullproject/collections/issues

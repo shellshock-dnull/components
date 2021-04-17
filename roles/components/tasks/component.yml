@@ -1,0 +1,45 @@
+---
+- block:
+    - set_fact:
+        prefix: '[component][{{ name }}]'
+      tags: always
+    - debug:
+        msg: '{{ componentObj| to_nice_json }}'
+        verbosity: 1
+      tags: always
+    - include_tasks: render_dir.yml
+      tags: always
+
+    - include_tasks: deps.yml
+      vars:
+        depsList: '{{ componentObj.deps | default({}) }}'
+      tags: deps
+    - include_tasks: files.yml
+      vars:
+        filesObj: '{{ componentObj.files | default({}) }}'
+      tags: files
+    - include_tasks: install.yml
+      vars:
+        installObj: '{{ componentObj.install | default({}) }}'
+      tags: install
+    - include: configs.yml
+      vars:
+        configsObj: '{{ componentObj.configs | default({}) }}'
+      tags: configs
+    - include: run_configs.yml
+      vars:
+        runConfigsObj: '{{ componentObj.run_configs | default({}) }}'
+      tags: run_configs
+    - include: run.yml
+      vars:
+        runObj: '{{ componentObj.run | default({}) }}'
+      tags: run
+  # - include_tasks:
+  #     file: plugin.yml
+  #   with_items: '{{ current_plugins }}'
+  #   loop_control:
+  #     loop_var: current_plugin
+  #   vars:
+  #     name: 'plugin {{ current_plugin }}'
+  #     pluginObj: '{{ componentObj.plugins[current_plugin] }}'
+  #   tags: plugins

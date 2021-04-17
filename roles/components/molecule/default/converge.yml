@@ -1,0 +1,42 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  remote_user: root
+  tasks:
+    # TODO: resolve deps
+    - name: Testing -- unittests
+      include_role:
+        name: components
+      vars:
+        role_component:
+          components: [unittests]
+          unittests:
+            name: unittests
+            install:
+              pre:
+                - name: "[unittests] pre install"
+                  file:
+                    path: ~/.unittests
+                    state: directory
+              packages: [git]
+              post:
+                - name: "[unittests] post install"
+                  copy:
+                    content: ""
+                    dest: ~/.unittests/file
+                    force: false
+            configs:
+              pre:
+                - name: "[unittests] pre config"
+                  copy:
+                    src: files/unittests.txt
+                    dest: ~/.unittest.txt
+              templates:
+                # TODO: modes
+                unittestsconfig:
+                  template: unittests/unitconfig
+                  dest: ~/.unittests/config
+                  variables:
+                    unitkey: "SUCCESS"
+            # TODO: add run section

@@ -1,0 +1,33 @@
+---
+name: components:molecule
+on:
+  push:
+    paths:
+    - 'roles/components/defaults/**'
+    - 'roles/components/tasks/**'
+    - 'roles/components/molecule/**'
+    - 'roles/components/templates/**'
+  pull_request:
+    branches: [main]
+    paths:
+    - 'roles/components/defaults/**'
+    - 'roles/components/tasks/**'
+    - 'roles/components/molecule/**'
+    - 'roles/components/templates/**'
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: components:unittests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ${{ github.repository }}
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2
+        with:
+          molecule_command: test
+          molecule_args: -d docker
+          molecule_working_dir: dnullproject/collections/roles/components
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
