@@ -66,6 +66,9 @@ role_component:
     install:
       packages:
         - polybar # install using default hosts package manager
+      virtualenv: ~/envs/py3    # path to virtualenv 
+                                # can be set as role_component.pip.virtualenv
+                                # default is omit
       pip:
         - polybar-onlinestatus  # install additional packages 
                                 # using pip

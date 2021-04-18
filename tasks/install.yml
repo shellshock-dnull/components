@@ -37,7 +37,7 @@
         component_install_post_raw_cmd:   "{{ installObj.port_cmd    | default([]) }}"
 
         # Total Optional
-        component_install_virtualenv:     "{{ installObj.virtualenv  | default(omit) }}"
+        component_install_virtualenv:     "{{ installObj.virtualenv | default(role_component.pip.virtualenv) | default(omit) }}"
         component_install_virtualenv_extra_args:  "{{ installObj.virtualenv_extra_args   | default(omit) }}"
         component_install_virtualenv_command:     "{{ installObj.pip_virtualenv_command  | default(omit) }}"
 
@@ -96,15 +96,22 @@
         update: false  # in var|default is used - got an error
       with_items: "{{ component_install_git }}"
 
-    - name: "[install] {{ name|upper }} Installing PIP packages"
+    # PIP
+    - name: "[install] {{ name|upper }} Installing PIP packages [no_venv]"
       pip:
         name: "{{ item }}"
         state: present
-        virtualenv: "{{ component_install_pip_virtualenv | default(omit) }}"
-        virtualenv_command: "{{ component_install_pip_virtualenv_command | default(omit) }}"
-        extra_args: "{{ component_install_pip_virtualenv_extra_args | default(omit) }}"
-        executable: pip3
       with_items: "{{ component_install_pip }}"
+      when: component_install_virtualenv is not defined
+    - name: "[install] {{ name|upper }} Installing PIP packages [venv:{{ component_install_virtualenv }}]"
+      pip:
+        name: "{{ item }}"
+        state: present
+        virtualenv: "{{ component_install_virtualenv | default(omit) }}"
+        virtualenv_command: "{{ component_install_virtualenv_command | default(omit) }}"
+        extra_args: "{{ component_install_virtualenv_extra_args | default(omit) }}"
+      with_items: "{{ component_install_pip }}"
+      when: component_install_virtualenv is defined
 
     - name: "[install] {{ name|upper }} Installing GEM packages"
       become: true
