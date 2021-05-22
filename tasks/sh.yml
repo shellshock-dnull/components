@@ -5,7 +5,6 @@
     shell: "{{ cmd }}"
     ignore_errors: true
     register: cmd_std
-
   - name: "[sh] {{ component.name|upper }} - {{ type }}-{{ prefix }} check - [{{ cmd }}] STDOUT"
     debug:
       msg: "{{ cmd_std.stdout }}"

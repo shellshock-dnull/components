@@ -7,62 +7,48 @@
       debug:
         msg: "{{ installObj | to_nice_json }}"
         verbosity: 2
-
     - name: "[install] {{ name|upper }} local facts"
       set_fact:
         component_install_packages:   "{{ installObj.packages | default([])     }}"
         component_install_pre:    "{{ installObj.pre  | default([])     }}"
         component_install_post:   "{{ installObj.post | default([])     }}"
-
         # Download direct from URL
         component_install_download:   "{{ installObj.download | default([])     }}"
         component_install_download_become:     "{{ installObj.download.become | default(false)     }}"
-
         # Git
         component_install_git:        "{{ installObj.git | default([])     }}"
-
         # Pip
         component_install_pip:        "{{ installObj.pip      | default([])     }}"
-
         # Gem
         component_install_gem:        "{{ installObj.gem      | default([])     }}"
-
         # Repos
         component_install_apt_keys:   "{{ installObj.apt_keys | default([])     }}"
         component_install_repos:      "{{ installObj.repos    | default([])     }}"
-
         # Install Raw handlers
         component_install_become_cmd:     "{{ installObj.become_cmd  | default(true)     }}"
         component_install_raw_cmd:        "{{ installObj.pre_cmd     | default([])     }}"
         component_install_post_raw_cmd:   "{{ installObj.port_cmd    | default([]) }}"
-
         # Total Optional
         component_install_virtualenv:     "{{ installObj.virtualenv | default(role_component.pip.virtualenv) | default(omit) }}"
         component_install_virtualenv_extra_args:  "{{ installObj.virtualenv_extra_args   | default(omit) }}"
         component_install_virtualenv_command:     "{{ installObj.pip_virtualenv_command  | default(omit) }}"
-
-
     - include_tasks: cmd.yml
       vars:
         prefix: install
         type: pre
         content: "{{ component_install_pre }}"
       when: component_install_pre
-
-
     - name: "[install] {{ name|upper }} RAW cmd [become:{{ component_install_become_cmd }}]"
       become: "{{ component_install_become_cmd }}"
       raw: "{{ item }}"
       with_items: "{{ component_install_raw_cmd }}"
       run_once: True
-
     - name: "[install] {{ name|upper }} Adding apt keys"
       become: true
       apt_key:
         url: "{{ item.url }}"
         state: "{{ item.state }}"
       with_items: "{{ component_install_apt_keys }}"
-
     - name: "[install] {{ name|upper }} Installing repos"
       become: true
       apt_repository:
@@ -71,7 +57,6 @@
         filename: "{{ item.filename }}"
         update_cache: yes
       with_items: "{{ component_install_repos }}"
-
     - name: "[install] {{ name|upper }} Downloading files from URL [become:{{ component_install_download_become }}]"
       become: "{{ component_install_download_become }}"
       get_url:
@@ -79,14 +64,12 @@
         dest: "{{ item.dest }}"
         mode: "{{ item.mode }}"
       with_items: "{{ component_install_download }}"
-
     - name: "[install] {{ name|upper }} Installing packages"
       become: true
       package:
         name: "{{ item }}"
         state: present
       with_items: "{{ component_install_packages }}"
-
     - name: "[install] {{ name|upper }} Installing Git repos"
       git:
         repo: "{{ item.repo }}"
@@ -95,7 +78,6 @@
         force: "{{ item.force | default('no') }}"
         update: false  # in var|default is used - got an error
       with_items: "{{ component_install_git }}"
-
     # PIP
     - name: "[install] {{ name|upper }} Installing PIP packages [no_venv]"
       pip:
@@ -112,7 +94,6 @@
         extra_args: "{{ component_install_virtualenv_extra_args | default(omit) }}"
       with_items: "{{ component_install_pip }}"
       when: component_install_virtualenv is defined
-
     - name: "[install] {{ name|upper }} Installing GEM packages"
       become: true
       gem:
@@ -120,17 +101,14 @@
         state: present
         user_install: no
       with_items: "{{ component_install_gem }}"
-
     - name: "[install] {{ name|upper }} post RAW cmd"
       become: true
       raw: "{{ item }}"
       with_items: "{{ component_install_post_raw_cmd }}"
-
     - include_tasks: cmd.yml
       vars:
         prefix: install
         type: post 
         content: "{{ component_install_post }}"
       when: component_install_post
-
   tags: install

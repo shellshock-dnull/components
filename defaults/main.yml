@@ -1,8 +1,6 @@
 # TODO: Escaping double curly braces in Ansible https://stackoverflow.com/questions/32279519/escaping-double-curly-braces-in-ansible
-
 tag: []
 output: ""
-
 # ROLE COMPONENT
 role_component:
   # pip:

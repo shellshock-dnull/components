@@ -3,32 +3,26 @@
     debug:
       msg: "{{ pluginObj | to_nice_json }}"
       verbosity: 2
-
   - name: "[plugin] {{ name|upper }} files"
     include_tasks: files.yml
     vars:
       filesObj: "{{ pluginObj.files | default({}) }}"
-
   - name: "[plugin] {{ name|upper }} install"
     include_tasks: install.yml
     vars:
       installObj: "{{ pluginObj.install | default({}) }}"
-
   - name: "[plugin] {{ name|upper }} configs"
     include: configs.yml
     vars:
       configsObj: "{{ pluginObj.configs | default({}) }}"
-
   - name: "[plugin] {{ name|upper }} RunConfigs"
     include: run_configs.yml
     vars:
       runConfigsObj: "{{ pluginObj.run_configs | default({}) }}"
-
   - name: "[plugin] {{ name|upper }} run"
     include: run.yml
     vars:
       runObj: "{{ pluginObj.run | default({}) }}"
-
   tags:
   - plugins
 

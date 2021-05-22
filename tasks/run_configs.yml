@@ -5,7 +5,6 @@
     debug:
       msg: "{{ runConfigsObj | to_nice_json }}"
       verbosity: 2
-
   - name: "[rConfig] {{ name|upper }} local facts"
     set_fact:
       run_configs_templates:        "{{ runConfigsObj.templates   | default([])  }}"
@@ -14,7 +13,6 @@
       handler_run_config_reload: "{{ runConfigsObj.handler_reload | default(name) }}"
       run_configs_pre:       "{{ runConfigsObj.pre        | default([])  }}"
       run_configs_post:      "{{ runConfigsObj.post       | default([])  }}"
-
   # RUN-CONFIGS - PRE CMD
   - include_tasks: cmd.yml
     vars:
@@ -22,7 +20,6 @@
       prefix: run_configs
       content: "{{ run_configs_pre }}"
     when: run_configs_pre
-
   # RUN TEMPLATES: render via role_templates
   - name: "[rConfig] {{ name|upper }} run configs"
     include_tasks: "template.yml"
@@ -35,7 +32,6 @@
     - "{{ run_configs_templates }}"
     loop_control:
       loop_var: template
-
   # RUN-CONFIGS - POST CMD
   - include_tasks: cmd.yml
     vars:
@@ -44,5 +40,4 @@
       content: "{{ run_configs_post }}"
     when: run_configs_post
   - meta: flush_handlers
-
   tags: run_configs

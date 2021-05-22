@@ -5,21 +5,17 @@
     debug:
       msg: "{{ filesObj | to_nice_json }}"
       verbosity: 2
-
   - name: "[file] {{ name|upper }} local facts"
     set_fact:
       files:      "{{ filesObj.file | default([]) }}"
       files_pre:  "{{ filesObj.pre  | default([]) }}"
       files_post: "{{ filesObj.post | default([]) }}"
-
-
   - include_tasks: cmd.yml
     vars:
       prefix: files
       type: pre
       content: "{{ files_pre }}"
     when: files_pre
-
   - name: "[file] {{ name|upper }} copy files"
     copy:
       src:   "{{ file.src  }}"
@@ -31,7 +27,6 @@
     with_items: "{{ files }}"
     loop_control:
       loop_var: file
-
   - include_tasks: cmd.yml
     vars:
       prefix: files

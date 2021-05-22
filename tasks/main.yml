@@ -8,13 +8,11 @@
       set_fact:
         current_plugins: '{% if plugins is defined %}{{ plugins }}{% else %}{{ hostvars[inventory_hostname].role_component.plugins[current_components]
           | default({}) }}{% endif %}'
-
     - name: "[global] ROLE COMPONENT - next components will be installed and configured on"
       debug:
         msg: '{{ current_components }}'
         verbosity: 1
     tags: always
-
   - block:
     - name: "[global] components"
       include_tasks: component.yml
