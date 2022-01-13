@@ -11,6 +11,7 @@
       template_type:  "{{ templates[template].type  | default('jinja')  }}"
       template_no_log: "{{templates[template].no_log| default(false)                }}"
       template_backup: "{{templates[template].backup| default(role_component.backup)}}"
+      template_become: "{{templates[template].become| default(false)}}"
   - name: "[template] {{ template|upper }} template folder"
     file:
       path:  "{{ template_dest | dirname }}"
@@ -25,4 +26,5 @@
       group: "{{ template_group }}"
       mode:  "{{ template_mode  }}"
       backup: "{{ template_backup }}"
+    become: "{{ template_become }}"
     # when: template_src
