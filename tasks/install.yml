@@ -19,8 +19,15 @@
         component_install_git:        "{{ installObj.git | default([])     }}"
         # Pip
         component_install_pip:        "{{ installObj.pip      | default([])     }}"
+        # npm
+        component_install_npm:        "{{ installObj.npm      | default([])     }}"
+        component_install_npm_path:   "{{ installObj.npm.path | default(role_component.npm.path)     }}"
         # Gem
-        component_install_gem:        "{{ installObj.gem      | default([])     }}"
+        component_install_gem:        "{{ installobj.gem      | default([])     }}"
+        # Flatpak
+        component_install_flatpak:    "{{ installobj.flatpak  | default([])     }}"
+        # Stew
+        component_install_stew:       "{{ installobj.stew     | default([])     }}"
         # Repos
         component_install_apt_keys:   "{{ installObj.apt_keys | default([])     }}"
         component_install_repos:      "{{ installObj.repos    | default([])     }}"
@@ -84,7 +91,9 @@
         name: "{{ item }}"
         state: present
       with_items: "{{ component_install_pip }}"
-      when: component_install_virtualenv is not defined
+      when: component_install_virtualenv is not defined or component_install_virtualenv == ""
+      environment:
+        PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
     - name: "[install] {{ name|upper }} Installing PIP packages [venv:{{ component_install_virtualenv }}]"
       pip:
         name: "{{ item }}"
@@ -93,7 +102,28 @@
         virtualenv_command: "{{ component_install_virtualenv_command | default(omit) }}"
         extra_args: "{{ component_install_virtualenv_extra_args | default(omit) }}"
       with_items: "{{ component_install_pip }}"
-      when: component_install_virtualenv is defined
+      when: component_install_virtualenv is defined and component_install_virtualenv != ""
+      environment:
+        PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
+    # NPM
+    - name: "[install] {{ name|upper }} Installing NPM packages [path:{{ component_install_npm_path }}]"
+      npm:
+        name: "{{ item }}"
+        state: present
+        path: "{{ component_install_npm_path }}"
+      with_items: "{{ component_install_npm }}"
+      environment:
+        PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
+    # FLATPAK
+    - name: "[install] {{ name|upper }} Installing FLATPAK packages"
+      flatpak:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ component_install_flatpak }}"
+    # STEW
+    - name: "[install] {{ name|upper }} Installing STEW packages"
+      shell: "stew install {{ item }}"
+      with_items: "{{ component_install_stew }}"
     - name: "[install] {{ name|upper }} Installing GEM packages"
       become: true
       gem:
@@ -101,6 +131,8 @@
         state: present
         user_install: no
       with_items: "{{ component_install_gem }}"
+      environment:
+        PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
     - name: "[install] {{ name|upper }} post RAW cmd"
       become: true
       raw: "{{ item }}"

@@ -1,0 +1,22 @@
+---
+# DEPS
+- block:
+  - name: "[deps] {{ name|upper }} local debug"
+    debug:
+      msg: "{{ depsList | to_nice_json }}"
+      verbosity: 2
+  - name: "[deps] {{ name|upper }} local facts"
+    set_fact:
+      deps:      "{{ depsList | default([]) }}"
+  - name: "[deps] {{ name|upper }} deps"
+    stat:
+      path: "~/.dnull/{{ item }}"
+    with_items: "{{ deps }}"
+    register: ideps
+  - fail:
+      msg: "Dependency is not installed: {{ item.item }}"
+    when: item.stat.exists == false
+    with_items: "{{ ideps.results }}"
+  tags:
+  - plugin
+  - deps
