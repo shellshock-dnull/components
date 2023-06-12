@@ -2,12 +2,11 @@
   - block:
     - name: "[global] component facts"
       set_fact:
-        current_components: '{% if components is defined %}{{ components }}{% else
-          %}{{ hostvars[inventory_hostname].role_component.components }}{% endif %}'
-    - name: "[global] plugin facts"
-      set_fact:
-        current_plugins: '{% if plugins is defined %}{{ plugins }}{% else %}{{ hostvars[inventory_hostname].role_component.plugins[current_components]
-          | default({}) }}{% endif %}'
+        current_components: '{{ role_component.components }}'
+    # - name: "[global] plugin facts"
+    #   set_fact:
+    #     current_plugins: '{% if plugins is defined %}{{ plugins }}{% else %}{{ hostvars[inventory_hostname].role_component.plugins[current_components]
+    #       | default({}) }}{% endif %}'
     - name: "[global] ROLE COMPONENT - next components will be installed and configured on"
       debug:
         msg: '{{ current_components }}'
