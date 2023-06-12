@@ -4,9 +4,9 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
-    image: geerlingguy/docker-ubuntu2204-ansible:latest
-    # pre_build_image: true
+  - name: ubuntu_2004
+    image: jgeusebroek/ubuntu2004-molecule
+    pre_build_image: true
 provisioner:
   name: ansible
   config_options:

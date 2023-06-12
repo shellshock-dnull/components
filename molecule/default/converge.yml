@@ -4,9 +4,7 @@
   gather_facts: true
   remote_user: root
   tasks:
-    - shell: apt update
-      become: true
-    - name: "Testing dummy"
+    - name: "Testing -- dummy"
       include_role:
         name: components
       vars:

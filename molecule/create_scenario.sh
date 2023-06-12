@@ -8,5 +8,5 @@ cp -rf default "${COMPONENT}"
 sed -i "s/dummy/${COMPONENT}/g" "${COMPONENT}/converge.yml"
 
 cd $(git rev-parse --show-toplevel)/.github/workflows
-cp -f dummy.yml "${COMPONENT}.yml"
+cp -f ../dummy.yml "${COMPONENT}.yml"
 sed -i "s/dummy/${COMPONENT}/g" "${COMPONENT}.yml"

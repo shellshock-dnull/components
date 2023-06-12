@@ -7,9 +7,9 @@ on:
       - master
 
 jobs:
-  git:
+  dummy:
     runs-on: ubuntu-latest
-    name: "component:git"
+    name: "component:dummy"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
         uses: gofrolist/molecule-action@v2
         with:
           molecule_command: test
-          molecule_args: -d docker -s git
+          molecule_args: -d docker -s dummy
           molecule_working_dir: dnull-project/components
         env:
           ANSIBLE_FORCE_COLOR: '1'
