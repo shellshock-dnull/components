@@ -4,12 +4,12 @@
   gather_facts: true
   remote_user: root
   tasks:
-    - shell: apt update
+    - name: Update and upgrade apt packages
+      shell: apt update
       become: true
-    - name: "Testing dummy"
-      include_role:
+    - ansible.builtin.include_role:
         name: components
       vars:
         role_component:
           components:
-            - dummy
+            - git

@@ -1,7 +1,19 @@
 # TODO: Escaping double curly braces in Ansible https://stackoverflow.com/questions/32279519/escaping-double-curly-braces-in-ansible
-alacritty:
-  template: "{{ T }}/alacritty.yml"
-  values: "{{ V }}/alacritty.yml"
+
+versions:
+  asdf: v0.9.0
+  gcloud: 375.0.0
+  golang: 1.17.8
+  grafana: 9.1.3
+  kubectl: v1.26.0
+  nodejs: 17.6.0
+  python: 3.10.0
+  ruby: 3.1.0
+  rust: 1.59.0
+  stew: v0.3.0
+  terraform: 1.1.8
+  packer: 1.8.0
+  php: 8.0.2
 
 tag: []
 output: ""
