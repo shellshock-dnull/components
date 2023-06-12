@@ -14,6 +14,6 @@ jobs:
         with:
           molecule_command: test
           molecule_args: -d docker
-          molecule_working_dir: componetns
+          molecule_working_dir: componetns/componetns
         env:
           ANSIBLE_FORCE_COLOR: '1'
