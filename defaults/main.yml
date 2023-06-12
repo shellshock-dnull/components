@@ -1,20 +1,7 @@
 # TODO: Escaping double curly braces in Ansible https://stackoverflow.com/questions/32279519/escaping-double-curly-braces-in-ansible
- 
-B: "${HOME}/bin"
-V: "${HOME}/dNull/ansible/group_vars/all/"
-G: "${HOME}/dNull/ansible/group_vars"
-T: "${HOME}/dNull/dotfiles/templates"
-RT: "${HOME}/dNull/dotfiles/run_templates"
-H: "${HOME}"
-SU: "${HOME}/.config/systemd/user"
-C: "${HOME}/.config/"
-D: "${HOME}/dNull/"
- 
-templates:
-  alacritty:
-    template: "{{ T }}/alacritty.yml"
-    config: "{{ C }}/alacritty/alacritty.yml"
-    values: "{{ V }}/alacritty.yml"
+alacritty:
+  template: "{{ T }}/alacritty.yml"
+  values: "{{ V }}/alacritty.yml"
 
 tag: []
 output: ""
@@ -33,60 +20,62 @@ role_component:
   run:    systemd
 
   components:
-    - alacritty
+    - dummy
 
+  dummy:
+    name: "Dummy component - used for testing"
+    install:
+      # become: false
+      packages:
+        - git
+    configs:
+      templates:
+        - name: dummy
+          template: dummy.yaml
+          dest: ~/.config/dummy.yaml
+          # group: staff
+          variables:
+            foo: bar
+
+  git:
+    name: git
+    install:
+      packages:
+        - git
+    configs:
+      templates:
+        - name: gitconfig
+          template: "gitconfig"
+          dest: "~/.gitconfig"
+          variables:
+            aliases:
+              - p = push
+              - st = status -sb
+              - ll = log --oneline
+              - last = log -1 HEAD --stat
+              - cm = commit -m
+              - rv = remote -v
+              - d = diff
+              - dv = difftool -t vimdiff -y
+              - gl = config --global -l
+              - se = !git rev-list --all | xargs git grep -F
 
   alacritty:
     name: "Alacritty - GPU Terminal"
     install:
-      npm: ""
       pre:
         - name: "[alacritty] deps"
           package:
             name: cargo
             state: present
           become: true
-        # - name: "[alacritty] install dir"
-        #   file:
-        #     path: ~/install
-        #     state: directory
-        # - block:
-        #   - name: "[alacritty] "
-        #     package:
-        #       name:
-        #       - git
-        #       - cargo
-        #       - cmake
-        #       - pkg-config
-        #       - libfreetype6-dev
-        #       - libfontconfig1-dev
-        #       - libxcb-xfixes0-dev
-        #       - libxkbcommon-dev
-        #       - python3
-        #     become: true
-        #   - name: "[alacritty] repo"
-        #     git:
-        #      repo: "https://github.com/alacritty/alacritty.git"
-        #      dest: ~/install/alacritty
-        #      recursive: true
-        #   - name: "[alacritty] cargo"
-        #     shell: "cargo build --release"
-        #     args:
-        #       chdir: ~/install/alacritty
-        #   - name: "[alacritty] install"
-        #     shell: "sudo cp target/release/alacritty /usr/local/bin"
-        #     args:
-        #       chdir: ~/install/alacritty/
-        #   when: ansible_facts['os_family'] == "Debian"
       post:
         - name: "[alacritty] cargo install"
           shell: cargo install alacritty
-          # - name: "[alacritty] cp into /usr/bin/alacritty"
-          #   # TODO: use ansible module instead
-          #   # shell: sudo cp ~/.cargo/bin/alacritty /usr/bin/alacritty 
-          #   # become: true
     configs:
-      variables:
-        font_size: 10.0
       templates:
-        - alacritty
+        - name: alacritty
+          template: alacritty.yml
+          dest: "~/.config/alacritty/alacritty.yml"
+          variables:
+            font_size: 10.0

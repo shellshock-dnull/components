@@ -8,7 +8,7 @@
   - name: "[config] {{ name|upper }} local facts"
     set_fact:
       configs_templates:            "{{ configsObj.templates       | default([]) }}"
-      configs_templates_variables:  "{{ configsObj.variables       | default([]) }}"
+      # configs_templates_variables:  "{{ configsObj.variables       | default([]) }}"
       configs_pre:           "{{ configsObj.pre            | default([]) }}"
       configs_post:          "{{ configsObj.post           | default([]) }}"
       handler_config:            "{{ configsObj.handler            | default('systemd') }}"
@@ -29,7 +29,7 @@
       handler_type: config
       handler_component: "{{ handler_config }}"
       handler_reload: "{{ handler_config_reload }}"
-      var: "{{ configs_templates_variables }}"
+      # var: "{{ configs_templates_variables }}"
     with_items:
       - "{{ configs_templates }}"
     loop_control:
@@ -39,17 +39,17 @@
   #   - config: "{{ c }}/nvim/editor.vim"
   #     template: "{{ t }}/nvim_editor.vim"
   #     values: "{{ v }}/nvim.yml"
-  - name: "[config] {{ name|upper }} zip config"
-    include_tasks: templates.yml
-    vars:
-      handler_type: config
-      handler_component: "{{ handler_config }}"
-      handler_reload: "{{ handler_config_reload }}"
-      var: "{{ configs_templates_variables }}"
-    with_items:
-      - "{{ configs_templates }}"
-    loop_control:
-      loop_var: ztemplate
+  # - name: "[config] {{ name|upper }} zip config"
+  #   include_tasks: templates.yml
+  #   vars:
+  #     handler_type: config
+  #     handler_component: "{{ handler_config }}"
+  #     handler_reload: "{{ handler_config_reload }}"
+  #     var: "{{ configs_templates_variables }}"
+  #   with_items:
+  #     - "{{ configs_templates }}"
+  #   loop_control:
+  #     loop_var: ztemplate
   # CONFIGS - POST CMD
   - include_tasks: cmd.yml
     vars:

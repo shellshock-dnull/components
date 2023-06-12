@@ -1,23 +1,24 @@
 ---
 # TEMPLATE
 - block:
-  - name: "[template] {{ template|upper }} local facts"
+  - name: "[template] {{ template.name|upper }} local facts"
     set_fact:
-      template_src:   "{{ templates[template].template | default('') }}"
-      template_dest:  "{{ templates[template].config | default('') }}"
-      template_owner: "{{ templates[template].owner | default(role_component.user)  }}"
-      template_group: "{{ templates[template].group | default(role_component.group) }}"
-      template_mode:  "{{ templates[template].mode  | default(role_component.mode)  }}"
-      template_type:  "{{ templates[template].type  | default('jinja')  }}"
-      template_no_log: "{{templates[template].no_log| default(false)                }}"
-      template_backup: "{{templates[template].backup| default(role_component.backup)}}"
-      template_become: "{{templates[template].become| default(false)}}"
-  - name: "[template] {{ template|upper }} template folder"
+      template_src:   "{{ template.template | default('') }}"
+      template_dest:  "{{ template.dest  | default('') }}"
+      template_owner: "{{ template.owner | default(role_component.user)  }}"
+      template_group: "{{ template.group | default(role_component.group) }}"
+      template_mode:  "{{ template.mode  | default(role_component.mode)  }}"
+      template_type:  "{{ template.type  | default('jinja')  }}"
+      template_no_log: "{{template.no_log| default(false)                }}"
+      template_backup: "{{template.backup| default(role_component.backup)}}"
+      template_become: "{{template.become| default(false)}}"
+      var: "{{template.variables|default({})}}"
+  - name: "[template] {{ template.name|upper }} template folder"
     file:
       path:  "{{ template_dest | dirname }}"
       state: directory
     # when: template_src
-  - name: "[template] {{ template|upper }} template - {{ template_dest }} {{ template_owner }}:{{ template_group }} {{ template_mode }}"
+  - name: "[template] {{ template.name|upper }} template - {{ template_dest }} {{ template_owner }}:{{ template_group }} {{ template_mode }}"
     no_log:  "{{ template_no_log}}"
     template:
       src:   "{{ template_src   }}"

@@ -1,0 +1,7 @@
+[user]
+    email = shellshock1953@gmail.com
+    name = Bohdan Sukhomlinov
+[alias]
+{% for alias in var.aliases %}
+    {{ alias }}
+{% endfor %}

@@ -21,22 +21,23 @@
       context: "{{ run_pre }}"
     when: run_pre
     # SELinux
-  - name: "[run] {{ name|upper }} selinux port"
-    seport: ports={{ selinux.port }} proto={{ selinux.proto }} setype={{ selinux.type }} state={{ selinux.state|default("present") }}
-    with_items:
-    - "{{ run_selinux }}"
-    loop_control:
-      loop_var: selinux
-    when: run_selinux
-  - name: "[run] {{ name|upper }} selinux permissive"
-    selinux_permissive:
-      name: "{{ selinux_permissive.name }}"
-      permissive: "{{ selinux_permissive.permissive }}"
-    with_items:
-    - "{{ run_selinux_permissive }}"
-    loop_control:
-      loop_var: selinux_permissive
-    when: run_selinux_permissive
+    # TODO: run seport
+  # - name: "[run] {{ name|upper }} selinux port"
+  #   seport: ports={{ selinux.port }} proto={{ selinux.proto }} setype={{ selinux.type }} state={{ selinux.state|default("present") }}
+    # with_items:
+    # - "{{ run_selinux }}"
+    # loop_control:
+    #   loop_var: selinux
+    # when: run_selinux
+  # - name: "[run] {{ name|upper }} selinux permissive"
+  #   selinux_permissive:
+  #     name: "{{ selinux_permissive.name }}"
+  #     permissive: "{{ selinux_permissive.permissive }}"
+  #   with_items:
+  #   - "{{ run_selinux_permissive }}"
+  #   loop_control:
+  #     loop_var: selinux_permissive
+  #   when: run_selinux_permissive
   - block:
       # SYSTEMD
     - name: "[run] {{ name|upper }} systemd start"
