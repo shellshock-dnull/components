@@ -5,6 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          path: "${{ github.repository }}"
+        # with:
+          # path: "${{ github.repository }}"
       - uses: gofrolist/molecule-action@v2
