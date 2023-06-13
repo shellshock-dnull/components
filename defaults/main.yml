@@ -333,3 +333,29 @@ role_component:
     run:
       init: none
 
+  stew:
+    name: "Stew - An independent package manager for compiled binaries"
+    install:
+      pre:
+        # - stat: path="~/.stew"
+        #   register: stew_dir
+        - name: "[stew] dir"
+          file:
+            path: ~/.stew/bin
+            state: directory
+        - name: "[stew] install binary"
+          # TODO: install on arm
+          get_url:
+            url: https://github.com/marwanhawari/stew/releases/download/{{ versions.stew }}/stew-linux-amd64
+            dest: ~/.stew/bin/stew
+            mode: 0755
+    # configs:
+    #   templates:
+    #     - name: stew
+    #       template:
+    #       variables:
+    #         apps:
+    #           - 'argoproj/argo-rollouts@v1.2.0-rc2'
+    #           - 'junegunn/fzf@0.29.0'
+    #           - 'git-time-metric/gtm@v1.3.5'
+    #           - 'BurntSushi/ripgrep@13.0.0'
