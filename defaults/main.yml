@@ -31,10 +31,7 @@ role_component:
   mode:   644
   run:    systemd
 
-  components:
-    - git
-    - asdf
-    - alacritty
+  components: []
 
   dummy:
     name: "Dummy component - used for testing"
@@ -182,3 +179,157 @@ role_component:
             - "rust   {{'{{'}} versions.rust   {{'}}'}}"
             - "packer {{'{{'}} versions.packer {{'}}'}}"
             - "terraform {{'{{'}} versions.terraform {{'}}'}}"
+
+  zsh:
+    # TODO: --ignore-deps for molecule testing
+    deps:
+      - git
+    install:
+      packages:
+        - git
+        - zsh
+      pre:
+        - name: "ZSH Installing oh-my-zsh"
+          git:
+            repo: https://github.com/robbyrussell/oh-my-zsh
+            dest: ~/.oh-my-zsh
+            depth: 1
+            force: true
+        - name: "ZSH Change default shell"
+          become: true
+          user:
+            name: "{{ '{{' }} ansible_user {{ '}}' }}"
+            shell: /usr/bin/zsh
+          ignore_errors: true
+        - name: "ZSH Change plugins"
+          git:
+            repo: "{{ '{{' }} item.repo  {{ '}}' }}"
+            dest: "~/.oh-my-zsh/custom/plugins/{{ '{{' }} item.plugin {{ '}}' }}"
+            depth: 1
+          loop:
+            - plugin: zsh-autosuggestions
+              repo: https://github.com/zsh-users/zsh-autosuggestions
+            - plugin: zsh-syntax-highlighting
+              repo: https://github.com/zsh-users/zsh-syntax-highlighting
+            - plugin: zsh-kubectl-prompt
+              repo: https://github.com/superbrothers/zsh-kubectl-prompt.git
+            - repo: https://github.com/bilelmoussaoui/flatpak-zsh-completion
+              plugin: flatpak
+
+    configs:
+      templates:
+        - name: zsh_theme
+          template: zsh_theme
+          dest: ~/.oh-my-zsh/themes/dnull.zsh-theme
+          variables:
+            ps_colors:
+              sirius: blue
+              antares: cyan
+              mira: red
+              prima: red
+              naos: green
+              wezen: green
+              vega: yellow
+              rigel: yellow
+              altair: magenta
+              capella: magenta
+              deneb: magenta
+              other: white
+        - name: zshrc
+          template: zshrc
+          dest: ~/.zsrch
+          variables:
+            startx: true
+            zsh_theme: dnull # agnoster
+            plugins:
+              - git
+              - kubectl
+              - zsh-autosuggestions
+              - zsh-syntax-highlighting
+              - zsh-kubectl-prompt
+              - asdf
+              - flatpak
+            local_vars:
+              # - VENV=py3
+              - GPG_TTY=$(tty)
+
+            exports:
+              - DEBFULLNAME="Bohdan Sukhomlinov"
+              - DEBEMAIL="shellshock.dnull@gmail.com"
+              - DISABLE_UPDATE_PROMPT=true
+              - EDITOR=lvim
+              - GPG_TTY
+              - HISTTIMEFORMAT="%d/%m/%y %T "
+              - HOSTALIASES=~/.hosts
+              - LANG=en_US.UTF-8
+              - LC_ALL=en_US.UTF-8
+              - PASSWORD_STORE_CLIP_TIME=180
+              - PATH="$PATH:/snap/bin"
+              - PATH="$PATH:$HOME/bin"
+              - PATH="$PATH:$HOME/go/bin"
+              - PATH="$PATH:$HOME/.local/bin"
+              - PATH="$PATH:$HOME/.stew/bin"
+              - PATH="$PATH:$HOME/install/flutter/bin"
+              # - PATH="$PATH:$HOME/ENV/${VENV}/bin"
+              - PATH="$PATH:$HOME/dNull/ues.lib"
+              - PATH="$PATH:$HOME/dNull/ues.utils"
+              - PATH="$PATH:$HOME/dNull/dnull"
+              - PATH="$PATH:$HOME/.pulumi/bin"
+              - PATH="$PATH:$HOME/.pub-cache/bin"
+              - SHELL=/usr/bin/zsh
+              - SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+              - VAGRANT_HOME='~/.vagrant.d'
+              - UES_LIB=~/dNull/ues.lib
+              - KUBECONFIG="${HOME}/.kube/config"
+              - HOSTALIASES=~/.hosts
+              - RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+
+            scripts:
+              - ~/bin/disable_wacom_touch.sh
+
+            bind_keys:
+              - bindkey '^ ' autosuggest-accept
+
+            aliases:
+              # - kubectl='minikube kubectl --'
+              - vi='lvim'
+              - clock='tty-clock -C 4 -b -x -n'
+              - c='xclip'
+              - digs='dig +short'
+              - display_off='xset dpms force off'
+              # - ekeys='vi ~/.config/sxhkd/sxhkdrc'
+              # - ekitty='vi ~/.config/kitty/kitty.conf'
+              - f='ranger'
+              - g_pass='pwgen 15 | head -n1 | cut -d " " -f1 | c'
+              - get_ip='wget -qO- https://ipecho.net/plain ; echo'
+              - k='kubectl'
+              - p='ping i.ua'
+              - s='systemctl'
+              - tf='terraform'
+              # - venv_2='source ~/ENV/2/bin/activate'
+              # - venv_3='source ~/ENV/py3/bin/activate'
+              - music='spt'
+              - ask='tuxi'
+              - altair='TERM=xterm-color ssh altair'
+              - mira='TERM=xterm-color ssh mira'
+              - prima='TERM=xterm-color ssh prima'
+              - antares='TERM=xterm-color ssh antares'
+              - capella='TERM=xterm-color ssh capella'
+              - deneb='TERM=xterm-color ssh deneb'
+              - naos='TERM=xterm-color ssh naos'
+              - rigel='TERM=xterm-color ssh rigel'
+              - sirius='TERM=xterm-color ssh sirius'
+              - vega='TERM=xterm-color ssh vega'
+              - wezen='TERM=xterm-color ssh wezen'
+            sources:
+              # - ~/ENV/${VENV}/bin/activate
+              - ~/dNull/secrets/secrets.sh || echo -e "[.!]\tNo secrets found!"
+            vault: []
+            evals:
+              - direnv hook zsh
+              - kubectl completion zsh
+            misc:
+              - unalias gr
+    run:
+      init: none
+

@@ -1,0 +1,17 @@
+# Based on agnoster zsh theme
+# Only changed `context` colors per HOST
+
+source ~/.oh-my-zsh/themes/agnoster.zsh-theme
+
+case $HOST in
+{% for host in var.ps_colors %}
+  {{ host }}) COLOR={{ var.ps_colors[host] }} ;;
+{% endfor %}
+  *) COLOR={{ var.ps_colors.other }} ;;
+esac
+
+prompt_context() {
+  if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    prompt_segment black default "%{$fg[${COLOR}]%}%n@%m%{$reset_color%}"
+  fi
+}

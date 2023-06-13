@@ -4,11 +4,11 @@
   gather_facts: true
   remote_user: root
   tasks:
-    # TODO: resolve deps
-    - name: "Testing -- dummy"
+    - name: "Testing -- zsh"
       include_role:
         name: components
       vars:
         role_component:
           components:
-            - dummy
+            - git # dep
+            - zsh
