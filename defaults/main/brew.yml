@@ -6,3 +6,6 @@ role_component:
         - name: "[brew] install using script"
           shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           become: true
+      post:
+        - name: "[brew] version"
+          shell: /home/linuxbrew/.linuxbrew/bin/brew --version

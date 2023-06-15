@@ -1,0 +1,31 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: ubuntu_2004
+    image: mpaivabarbosa/molecule-systemd-ubuntu:20.04
+    pre_build_image: true
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      hash_behaviour: merge
+verifier:
+  name: ansible
+scenario:
+  test_sequence:
+    - dependency
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence # skip because brew installed bash script
+                    # which is always show "changed" state
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
