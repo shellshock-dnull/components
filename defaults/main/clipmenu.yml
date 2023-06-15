@@ -1,0 +1,48 @@
+role_component:
+  clipmenu:
+    name: "Clipmenu - Simple Clipboard Manager"
+    install:
+      pre:
+        - name: "[clipmenu] deps"
+          package:
+            name:
+            - build-essential
+            - git
+            - libxcursor-dev
+            - libxi-dev
+            - libxinerama-dev
+            - libxrandr-dev
+            - xsel
+          become: true
+      post:
+        - name: "[clipmenu] repo clipnotify"
+          git:
+            repo: "https://github.com/cdown/clipnotify"
+            dest: /tmp/clipnotify/
+            depth: 1
+        - name: "[clipmenu] repo clipmenu"
+          git:
+            repo: "https://github.com/cdown/clipmenu"
+            dest: /tmp/clipmenu/
+            depth: 1
+
+        - block:
+          - name: "[clipmenu] install clipnotify"
+            shell: "make install"
+            args:
+              chdir: "/tmp/clipnotify"
+          - name: "[clipmenu] install clipmenu"
+            shell: "make install"
+            args:
+              chdir: "/tmp/clipmenu"
+          become: true
+
+        - name: "[clipmenu] systemd user"
+          systemd:
+            name: clipmenud
+            state: started
+            enabled: yes
+            scope: user
+          ignore_errors: yes # for molecule
+
+

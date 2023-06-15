@@ -4,7 +4,6 @@ role_component:
     install:
       pre:
         - name: "[brew] deps"
-          # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
           package:
             name: "{{'{{'}} item {{'}}'}}"
             state: present
