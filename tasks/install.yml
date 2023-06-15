@@ -11,6 +11,7 @@
       set_fact:
         component_install_become:   "{{ installObj.become | default(true)     }}"
         component_install_packages:   "{{ installObj.packages | default([])     }}"
+        component_install_brew:   "{{ installObj.brew | default([])     }}"
         component_install_pre:    "{{ installObj.pre  | default([])     }}"
         component_install_post:   "{{ installObj.post | default([])     }}"
         # Download direct from URL
@@ -79,6 +80,13 @@
         name: "{{ item }}"
         state: present
       with_items: "{{ component_install_packages }}"
+    - name: "[install] {{ name|upper }} Installing brew"
+      # TODO: install: contifional become
+      become: "{{ component_install_become }}"
+      community.general.homebrew:
+        name: "{{ item }}"
+        state: present
+      with_items: "{{ component_install_brew }}"
     - name: "[install] {{ name|upper }} Installing Git repos"
       git:
         repo: "{{ item.repo }}"

@@ -1,0 +1,23 @@
+role_component:  
+  git:
+    name: git
+    install:
+      packages:
+        - git
+    configs:
+      templates:
+        - name: gitconfig
+          template: "gitconfig"
+          dest: "~/.gitconfig"
+          variables:
+            aliases:
+              - p = push
+              - st = status -sb
+              - ll = log --oneline
+              - last = log -1 HEAD --stat
+              - cm = commit -m
+              - rv = remote -v
+              - d = diff
+              - dv = difftool -t vimdiff -y
+              - gl = config --global -l
+              - se = !git rev-list --all | xargs git grep -F

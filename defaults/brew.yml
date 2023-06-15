@@ -1,0 +1,8 @@
+role_component:
+  brew:
+    name: "Brew - package manager for macOS or Linux"
+    install:
+      pre:
+        - name: "[brew] install using script"
+          shell: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          become: true

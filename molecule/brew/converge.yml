@@ -1,0 +1,14 @@
+---
+- name: converge
+  hosts: all
+  gather_facts: true
+  remote_user: root
+  tasks:
+    # todo: resolve deps
+    - name: "testing -- brew"
+      include_role:
+        name: components
+      vars:
+        role_component:
+          components:
+            - brew
