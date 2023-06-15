@@ -81,7 +81,7 @@ role_component:
             - "python {{'{{'}} versions.python {{'}}'}}"
             - "golang {{'{{'}} versions.golang {{'}}'}}"
             - "gcloud {{'{{'}} versions.gcloud {{'}}'}}"
-            - "php    {{'{{'}} versions.gcloud {{'}}'}}"
+            # - "php    {{'{{'}} versions.gcloud {{'}}'}}" # BROKEN
             - "rust   {{'{{'}} versions.rust   {{'}}'}}"
             - "packer {{'{{'}} versions.packer {{'}}'}}"
             - "terraform {{'{{'}} versions.terraform {{'}}'}}"

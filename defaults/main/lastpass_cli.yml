@@ -1,5 +1,6 @@
 role_component:
   lastpass-cli:
     name: "Lastpass CLI"
-    brew:
-      - lastpass-cli
+    install:
+      brew:
+        - lastpass-cli
