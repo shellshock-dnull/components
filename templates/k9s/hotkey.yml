@@ -1,0 +1,29 @@
+hotKey:
+  shift-1:
+    shortCut:    Shift-1
+    description: View pods
+    command:     pods
+  shift-2:
+    shortCut:    Shift-2
+    description: View Deployments
+    command:     deployments
+  shift-3:
+    shortCut:    Shift-3
+    description: View Statefulset
+    command:     statefulset
+  shift-4:
+    shortCut:    Shift-4
+    description: View Service
+    command:     service
+  shift-5:
+    shortCut:    Shift-5
+    description: View Ingress
+    command:     ingress
+  shift-9:
+    shortCut:    Shift-9
+    description: View Events
+    command:     events
+  shift-0:
+    shortCut:    Shift-0
+    description: Viewing namespaces
+    command:     namespace
