@@ -22,3 +22,16 @@ role_component:
       post:
         - name: "[brew] version"
           shell: /home/linuxbrew/.linuxbrew/bin/brew --version
+        - name: "[brew] install brew packages"
+          community.general.homebrew:
+           state: present
+           name: []
+             # - detect-secrets
+             # - direnv
+             # - ipcalc
+             # - lastpass-cli
+             # - lazygit
+             # - pre-commit
+             # - shellcheck
+             # - terraform-docs
+             # - tflint
