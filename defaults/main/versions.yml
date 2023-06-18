@@ -12,3 +12,4 @@ versions:
   terraform: 1.1.8
   packer: 1.8.0
   php: 8.0.2
+  k9s: v0.27.4

@@ -1,0 +1,51 @@
+# TODO: support multi-arch
+role_component:
+  k9s:
+    # deps:
+    #   - brew # for MacOS
+    install:
+      pre:
+        - name: "[k9s] creating /tmp/k9s"
+          file:
+            path: /tmp/k9s
+            state: directory
+
+          # Linux
+        - name: "[k9s] Download binary for Linux"
+          unarchive:
+            src: https://github.com/derailed/k9s/releases/download/{{'{{'}} versions.k9s {{'}}'}}/k9s_Linux_amd64.tar.gz
+            remote_src: yes
+            dest: /tmp/k9s
+          when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+          # MacOS
+        - block:
+          - name: "[k9s] MacOS deps"
+            community.general.homebrew:
+              name: gnu-tar
+              state: present
+          - name: "[k9s] Download binary for MacOS"
+            unarchive:
+              src: https://github.com/derailed/k9s/releases/download/{{'{{'}} versions.k9s {{'}}'}}/k9s_Darwin_arm64.tar.gz
+              remote_src: yes
+              dest: /tmp/k9s
+            environment:
+                PATH: "/opt/homebrew/bin:$PATH"
+
+          when: ansible_distribution == 'MacOSX'
+    configs:
+      pre:
+        - name: "[k9s] config dir"
+          file:
+            path: ~/.config/k9s
+            state: directory
+      templates:
+        - name: main
+          template: k9s/config.yml
+          dest: ~/.config/k9s/config.yml
+        - name: hotkey
+          template: k9s/hotkey.yml
+          dest: ~/.config/k9s/hotkey.yml
+        - name: plugin
+          template: k9s/plugin.yml
+          dest: ~/.config/k9s/plugin.yml

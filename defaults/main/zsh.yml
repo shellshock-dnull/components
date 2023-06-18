@@ -38,7 +38,7 @@ role_component:
     configs:
       templates:
         - name: zsh_theme
-          template: zsh_theme
+          template: zsh/zsh_theme
           dest: ~/.oh-my-zsh/themes/dnull.zsh-theme
           variables:
             ps_colors:
@@ -55,7 +55,7 @@ role_component:
               deneb: magenta
               other: white
         - name: zshrc
-          template: zshrc
+          template: zsh/zshrc
           dest: ~/.zsrch
           variables:
             startx: true
