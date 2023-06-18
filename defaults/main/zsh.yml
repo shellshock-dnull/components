@@ -56,7 +56,7 @@ role_component:
               other: white
         - name: zshrc
           template: zsh/zshrc
-          dest: ~/.zsrch
+          dest: ~/.zshrc
           variables:
             startx: true
             zsh_theme: dnull # agnoster
@@ -102,9 +102,9 @@ role_component:
               - KUBECONFIG="${HOME}/.kube/config"
               - HOSTALIASES=~/.hosts
               - RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+              - XDG_CONFIG_HOME=~/.config/
 
-            scripts:
-              - ~/bin/disable_wacom_touch.sh
+            scripts: []
 
             bind_keys:
               - bindkey '^ ' autosuggest-accept

@@ -73,20 +73,25 @@
         dest: "{{ item.dest }}"
         mode: "{{ item.mode }}"
       with_items: "{{ component_install_download }}"
-    - name: "[install] {{ name|upper }} Installing packages"
+
+
       # TODO: install: contifional become
+    - name: "[install] {{ name|upper }} Installing packages"
       become: "{{ component_install_become }}"
       package:
         name: "{{ item }}"
         state: present
       with_items: "{{ component_install_packages }}"
-    - name: "[install] {{ name|upper }} Installing brew"
-      # TODO: install: contifional become
-      become: "{{ component_install_become }}"
+      when: ansible_distribution != 'MacOSX'
+
+    - name: "[install] {{ name|upper }} Installing brew packages"
       community.general.homebrew:
         name: "{{ item }}"
         state: present
-      with_items: "{{ component_install_brew }}"
+      with_items: "{{ component_install_packages }}"
+      when: ansible_distribution == 'MacOSX'
+
+
     - name: "[install] {{ name|upper }} Installing Git repos"
       git:
         repo: "{{ item.repo }}"
