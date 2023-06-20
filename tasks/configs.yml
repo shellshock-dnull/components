@@ -1,18 +1,17 @@
 ---
 # CONFIGS
 - block:
-  - name: "[config] {{ name|upper }} local debug"
-    debug:
-      msg: "{{ configsObj | to_nice_json }}"
-      verbosity: 1
-  - name: "[config] {{ name|upper }} local facts"
-    set_fact:
+  - set_fact:
+      config_prefix: "{{ prefix }}[config]"
       configs_templates:            "{{ configsObj.templates       | default([]) }}"
       # configs_templates_variables:  "{{ configsObj.variables       | default([]) }}"
       configs_pre:           "{{ configsObj.pre            | default([]) }}"
       configs_post:          "{{ configsObj.post           | default([]) }}"
       handler_config:            "{{ configsObj.handler            | default('systemd') }}"
       handler_config_reload:     "{{ configsObj.handler_reload     | default(name) }}"
+  - debug:
+      msg: "{{ configsObj | to_nice_json }}"
+      verbosity: 1
   # CONFIGS - PRE CMD
   - include_tasks: cmd.yml
     vars:
@@ -22,24 +21,27 @@
     when: configs_pre
     loop_control:
       loop_var: cmd
+
   # Template itself: role_component[item].config
-  - name: "[config] {{ name|upper }} config"
-    include_tasks: template.yml
+  - include_tasks: template.yml
     vars:
       handler_type: config
       handler_component: "{{ handler_config }}"
       handler_reload: "{{ handler_config_reload }}"
+      templates: "{{ configsObj.templates }}"
       # var: "{{ configs_templates_variables }}"
     with_items:
-      - "{{ configs_templates }}"
+      - "{{ lookup('ansible.builtin.dict', configs_templates) }}"
     loop_control:
       loop_var: template
+    no_log: True # otherwise will show all template vars
+
   # ZIP #Template itself: role_component[item].config
   #   zip:
   #   - config: "{{ c }}/nvim/editor.vim"
   #     template: "{{ t }}/nvim_editor.vim"
   #     values: "{{ v }}/nvim.yml"
-  # - name: "[config] {{ name|upper }} zip config"
+  # - name: "{{ config_prefix }} zip config"
   #   include_tasks: templates.yml
   #   vars:
   #     handler_type: config

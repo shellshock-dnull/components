@@ -40,12 +40,12 @@ role_component:
             path: ~/.config/k9s
             state: directory
       templates:
-        - name: main
+        main:
           template: k9s/config.yml
           dest: ~/.config/k9s/config.yml
-        - name: hotkey
+        hotkey:
           template: k9s/hotkey.yml
           dest: ~/.config/k9s/hotkey.yml
-        - name: plugin
+        plugin:
           template: k9s/plugin.yml
           dest: ~/.config/k9s/plugin.yml

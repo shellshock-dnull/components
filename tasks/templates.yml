@@ -1,5 +1,6 @@
 ---
 # TEMPLATE
+# deprecated?
 - block:
   # - name: "[zip_template] {{ name|upper }} local debug"
   #   debug:

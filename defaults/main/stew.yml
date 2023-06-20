@@ -17,7 +17,7 @@ role_component:
             mode: 0755
     # configs:
     #   templates:
-    #     - name: stew
+    #     stew:
     #       template:
     #       variables:
     #         apps:

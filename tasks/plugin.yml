@@ -1,25 +1,26 @@
 - block:
-  - name: "[plugin] {{ name|upper }} debug"
-    debug:
+  - set_fact:
+      plugin_prefix: "{{ prefix }}[plugin]"
+  - debug:
       msg: "{{ pluginObj | to_nice_json }}"
       verbosity: 2
-  - name: "[plugin] {{ name|upper }} files"
+  - name: "{{ plugin_prefix }} files"
     include_tasks: files.yml
     vars:
       filesObj: "{{ pluginObj.files | default({}) }}"
-  - name: "[plugin] {{ name|upper }} install"
+  - name: "{{ plugin_prefix }} install"
     include_tasks: install.yml
     vars:
       installObj: "{{ pluginObj.install | default({}) }}"
-  - name: "[plugin] {{ name|upper }} configs"
+  - name: "{{ plugin_prefix }} configs"
     include: configs.yml
     vars:
       configsObj: "{{ pluginObj.configs | default({}) }}"
-  - name: "[plugin] {{ name|upper }} RunConfigs"
+  - name: "{{ plugin_prefix }} RunConfigs"
     include: run_configs.yml
     vars:
       runConfigsObj: "{{ pluginObj.run_configs | default({}) }}"
-  - name: "[plugin] {{ name|upper }} run"
+  - name: "{{ plugin_prefix }} run"
     include: run.yml
     vars:
       runObj: "{{ pluginObj.run | default({}) }}"

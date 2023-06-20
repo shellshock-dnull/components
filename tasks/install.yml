@@ -3,12 +3,8 @@
 # INSTALL
 - block:
   - block:
-    - name: "[install] {{ name|upper }} local debug"
-      debug:
-        msg: "{{ installObj | to_nice_json }}"
-        verbosity: 2
-    - name: "[install] {{ name|upper }} local facts"
-      set_fact:
+    - set_fact:
+        install_prefix: "{{ prefix }}[install]"
         component_install_become:   "{{ installObj.become | default(true)     }}"
         component_install_packages:   "{{ installObj.packages | default([])     }}"
         component_install_brew:   "{{ installObj.brew | default([])     }}"
@@ -41,24 +37,27 @@
         component_install_virtualenv:     "{{ installObj.virtualenv | default(role_component.pip.virtualenv) | default(omit) }}"
         component_install_virtualenv_extra_args:  "{{ installObj.virtualenv_extra_args   | default(omit) }}"
         component_install_virtualenv_command:     "{{ installObj.pip_virtualenv_command  | default(omit) }}"
+    - debug:
+        msg: "{{ installObj | to_nice_json }}"
+        verbosity: 2
     - include_tasks: cmd.yml
       vars:
         prefix: install
         type: pre
         content: "{{ component_install_pre }}"
       when: component_install_pre
-    - name: "[install] {{ name|upper }} RAW cmd [become:{{ component_install_become_cmd }}]"
+    - name: "{{ install_prefix }} RAW cmd [become:{{ component_install_become_cmd }}]"
       become: "{{ component_install_become_cmd }}"
       raw: "{{ item }}"
       with_items: "{{ component_install_raw_cmd }}"
       run_once: True
-    - name: "[install] {{ name|upper }} Adding apt keys"
+    - name: "{{ install_prefix }} Adding apt keys"
       become: "{{ component_install_become }}"
       apt_key:
         url: "{{ item.url }}"
         state: "{{ item.state }}"
       with_items: "{{ component_install_apt_keys }}"
-    - name: "[install] {{ name|upper }} Installing repos"
+    - name: "{{ install_prefix }} Installing repos"
       become: "{{ component_install_become }}"
       apt_repository:
         repo: "{{ item.repo }}"
@@ -66,7 +65,7 @@
         filename: "{{ item.filename }}"
         update_cache: yes
       with_items: "{{ component_install_repos }}"
-    - name: "[install] {{ name|upper }} Downloading files from URL [become:{{ component_install_download_become }}]"
+    - name: "{{ install_prefix }} Downloading files from URL [become:{{ component_install_download_become }}]"
       become: "{{ component_install_download_become }}"
       get_url:
         url:  "{{ item.url  }}"
@@ -76,7 +75,7 @@
 
 
       # TODO: install: contifional become
-    - name: "[install] {{ name|upper }} Installing packages"
+    - name: "{{ install_prefix }} Installing packages"
       become: "{{ component_install_become }}"
       package:
         name: "{{ item }}"
@@ -84,7 +83,7 @@
       with_items: "{{ component_install_packages }}"
       when: ansible_distribution != 'MacOSX'
 
-    - name: "[install] {{ name|upper }} Installing brew packages"
+    - name: "{{ install_prefix }} Installing brew packages"
       community.general.homebrew:
         name: "{{ item }}"
         state: present
@@ -92,7 +91,7 @@
       when: ansible_distribution == 'MacOSX'
 
 
-    - name: "[install] {{ name|upper }} Installing Git repos"
+    - name: "{{ install_prefix }} Installing Git repos"
       git:
         repo: "{{ item.repo }}"
         dest: "{{ item.dest }}"
@@ -101,7 +100,7 @@
         update: false  # in var|default is used - got an error
       with_items: "{{ component_install_git }}"
     # PIP
-    - name: "[install] {{ name|upper }} Installing PIP packages [no_venv]"
+    - name: "{{ install_prefix }} Installing PIP packages [no_venv]"
       pip:
         name: "{{ item }}"
         state: present
@@ -109,7 +108,7 @@
       when: component_install_virtualenv is not defined or component_install_virtualenv == ""
       environment:
         PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
-    - name: "[install] {{ name|upper }} Installing PIP packages [venv:{{ component_install_virtualenv }}]"
+    - name: "{{ install_prefix }} Installing PIP packages [venv:{{ component_install_virtualenv }}]"
       pip:
         name: "{{ item }}"
         state: present
@@ -121,7 +120,7 @@
       environment:
         PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
     # # NPM
-    # - name: "[install] {{ name|upper }} Installing NPM packages [path:{{ component_install_npm_path }}]"
+    # - name: "{{ install_prefix }} Installing NPM packages [path:{{ component_install_npm_path }}]"
     #   npm:
     #     name: "{{ item }}"
     #     state: present
@@ -130,16 +129,16 @@
     #   environment:
     #     PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
     # FLATPAK
-    # - name: "[install] {{ name|upper }} Installing FLATPAK packages"
+    # - name: "{{ install_prefix }} Installing FLATPAK packages"
     #   flatpak:
     #     name: "{{ item }}"
     #     state: present
     #   with_items: "{{ component_install_flatpak }}"
     # STEW
-    - name: "[install] {{ name|upper }} Installing STEW packages"
+    - name: "{{ install_prefix }} Installing STEW packages"
       shell: "stew install {{ item }}"
       with_items: "{{ component_install_stew }}"
-    # - name: "[install] {{ name|upper }} Installing GEM packages"
+    # - name: "{{ install_prefix }} Installing GEM packages"
     #   become: true
     #   gem:
     #     name: "{{ item }}"
@@ -148,7 +147,7 @@
     #   with_items: "{{ component_install_gem }}"
     #   environment:
     #     PATH: "{{ ansible_env.HOME }}/.asdf/shims:{{ ansible_env.PATH }}"
-    - name: "[install] {{ name|upper }} post RAW cmd"
+    - name: "{{ install_prefix }} post RAW cmd"
       become: "{{ component_install_become }}"
       raw: "{{ item }}"
       with_items: "{{ component_install_post_raw_cmd }}"

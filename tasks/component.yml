@@ -1,6 +1,8 @@
 - block:
-  - name: "[component] {{ name|upper }} debug"
-    debug:
+  - set_fact:
+      prefix: "[component][{{ name }}]"
+
+  - debug:
       msg: "{{ componentObj| to_nice_json }}"
       verbosity: 1
 
@@ -10,44 +12,37 @@
       path: ~/.dnull
       state: directory
 
-  - name: "[component] {{ name|upper }} deps"
-    include_tasks: deps.yml
+  - include_tasks: deps.yml
     vars:
       depsList: "{{ componentObj.deps | default({}) }}"
     tags: deps 
 
-  - name: "[component] {{ name|upper }} files"
-    include_tasks: files.yml
+  - include_tasks: files.yml
     vars:
       filesObj: "{{ componentObj.files | default({}) }}"
     tags: files
 
-  - name: "[component] {{ name|upper }} install"
-    include_tasks: install.yml
+  - include_tasks: install.yml
     vars:
       installObj: "{{ componentObj.install | default({}) }}"
     tags: install
 
-  - name: "[component] {{ name|upper }} configs"
-    include: configs.yml
+  - include: configs.yml
     vars:
       configsObj: "{{ componentObj.configs | default({}) }}"
     tags: configs
 
-  - name: "[component] {{ name|upper }} runConfigs"
-    include: run_configs.yml
+  - include: run_configs.yml
     vars:
       runConfigsObj: "{{ componentObj.run_configs | default({}) }}"
     tags: run_configs
       
-  - name: "[component] {{ name|upper }} run"
-    include: run.yml
+  - include: run.yml
     vars:
       runObj: "{{ componentObj.run | default({}) }}"
     tags: run
 
-  # - name: "[component] {{ name|upper }} plugins"
-  #   include_tasks:
+  # - include_tasks:
   #     file: plugin.yml
   #   with_items: '{{ current_plugins }}'
   #   loop_control:
@@ -57,7 +52,7 @@
   #     pluginObj: '{{ componentObj.plugins[current_plugin] }}'
   #   tags: plugins
       
-  - name: "[component] {{ name|upper }} store deps in ~/.dnull/{{ name }}"
+  - name: "{{ prefix }}[deps] ~/.dnull/{{ name }}"
     copy:
       dest: "~/.dnull/{{ name }}"
       content: |

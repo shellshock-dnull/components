@@ -1,8 +1,8 @@
 - block:
-  - name: "[render] {{ name|upper }} folder"
-    set_fact:
+  - set_fact:
       component_render_dir: "{{ role_component.render_dir }}/{{ inventory_hostname }}/{{ name }}"
-  - name: "[render] {{ name|upper }} render folder"
+      render_prefix: "{{ prefix }}[render]"
+  - name: "{{ render_prefix }} render folder"
     become: false
     file:
       path: "{{ component_render_dir }}"

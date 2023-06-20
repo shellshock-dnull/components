@@ -1,22 +1,21 @@
 ---
 # FILES
 - block:
-  - name: "[file] {{ name|upper }} local debug"
-    debug:
-      msg: "{{ filesObj | to_nice_json }}"
-      verbosity: 2
-  - name: "[file] {{ name|upper }} local facts"
-    set_fact:
+  - set_fact:
+      files_prefix: "{{ prefix }}[file]"
       files:      "{{ filesObj.file | default([]) }}"
       files_pre:  "{{ filesObj.pre  | default([]) }}"
       files_post: "{{ filesObj.post | default([]) }}"
+  - debug:
+      msg: "{{ filesObj | to_nice_json }}"
+      verbosity: 2
   - include_tasks: cmd.yml
     vars:
       prefix: files
       type: pre
       content: "{{ files_pre }}"
     when: files_pre
-  - name: "[file] {{ name|upper }} copy files"
+  - name: "{{ file_prefix }} copy files"
     copy:
       src:   "{{ file.src  }}"
       dest:  "{{ file.dest }}"

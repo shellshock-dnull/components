@@ -17,7 +17,7 @@ role_component:
           shell: cargo install alacritty
     configs:
       templates:
-        - name: alacritty
+        alacritty:
           template: alacritty.yml
           dest: "~/.config/alacritty/alacritty.yml"
           variables:

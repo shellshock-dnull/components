@@ -1,14 +1,13 @@
 ---
 # DEPS
 - block:
-  - name: "[deps] {{ name|upper }} local debug"
-    debug:
+  - set_fact:
+      deps_prefix: "{{ prefix }}[deps]"
+      deps:      "{{ depsList | default([]) }}"
+  - debug:
       msg: "{{ depsList | to_nice_json }}"
       verbosity: 2
-  - name: "[deps] {{ name|upper }} local facts"
-    set_fact:
-      deps:      "{{ depsList | default([]) }}"
-  - name: "[deps] {{ name|upper }} deps"
+  - name: "{{ prefix }} checking deps"
     stat:
       path: "~/.dnull/{{ item }}"
     with_items: "{{ deps }}"
