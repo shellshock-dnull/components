@@ -22,14 +22,30 @@ role_component:
   dummy:
     name: "Dummy component - used for testing"
     install:
-      # become: false
+      pre:
+        - name: "[dummy][install][pre] example"
+          debug:
+            msg: "Hello from install PRE"
       packages:
         - git
+      post:
+        - name: "[dummy][install][post] example"
+          debug:
+            msg: "Hello from install POST"
     configs:
+      pre:
+        - debug: msg="Hello from config PRE"
       templates:
-        - name: dummy
+        dummy:
           template: dummy.yaml
           dest: ~/.config/dummy.yaml
           # group: staff
           variables:
             foo: bar
+      post:
+        - debug: msg="Hello from config POST"
+    files:
+      - file: dummy
+        dest: ~/dummy.txt
+        scr: dummy.txt
+        mode: '0765'
