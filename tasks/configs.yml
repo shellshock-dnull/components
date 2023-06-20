@@ -3,7 +3,7 @@
 - block:
   - set_fact:
       config_prefix: "{{ prefix }}[config]"
-      configs_templates:            "{{ configsObj.templates       | default([]) }}"
+      configs_templates:            "{{ configsObj.templates       | default({}) }}"
       # configs_templates_variables:  "{{ configsObj.variables       | default([]) }}"
       configs_pre:           "{{ configsObj.pre            | default([]) }}"
       configs_post:          "{{ configsObj.post           | default([]) }}"
