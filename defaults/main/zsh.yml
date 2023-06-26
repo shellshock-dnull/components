@@ -66,7 +66,8 @@ role_component:
               - zsh-kubectl-prompt
               - asdf
               - flatpak
-            local_vars: [GPG_TTY=$(tty)]
+            local_vars:
+              - GPG_TTY=$(tty)
             exports:
               - DEBFULLNAME="Bohdan Sukhomlinov"
               - DEBEMAIL="shellshock.dnull@gmail.com"
@@ -99,7 +100,8 @@ role_component:
               - RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
               - XDG_CONFIG_HOME=~/.config/
             scripts: []
-            bind_keys: [bindkey '^ ' autosuggest-accept]
+            bind_keys:
+              - bindkey '^ ' autosuggest-accept
             aliases:
               # - kubectl='minikube kubectl --'
               - vi='lvim'
@@ -133,7 +135,10 @@ role_component:
               - wezen='TERM=xterm-color ssh wezen'
             sources: ['~/dNull/secrets/secrets.sh || echo -e "[.!]\tNo secrets found!"']
             vault: []
-            evals: [direnv hook zsh, kubectl completion zsh]
-            misc: [unalias gr]
+            evals:
+              - direnv hook zsh
+              - kubectl completion zsh
+            misc:
+              - unalias gr
     run:
       init: none
