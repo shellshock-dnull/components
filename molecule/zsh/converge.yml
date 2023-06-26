@@ -10,5 +10,5 @@
       vars:
         role_component:
           components:
-            - git  # dep
+            - git # dep
             - zsh
