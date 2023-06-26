@@ -47,16 +47,6 @@ role_component:
 
 `ansible group_vars/all/polybar.yml`
 ```yaml
-# Template vars
-templates:
-  polybar:  # name of template. This should will be used in role_component.dunst.templates[]
-    template: "~/dotfiles/polybar.ini"   #  path to template
-    config:   "~/.config/polybar.ini"    #  path there template should be rendered
-
-  run_polybar:
-    template: "~/dotfiles/polybar.sh"
-    config: "~/.config/polybar.sh"
-    mode: 766  # optional file perms (allow to exec)
 
 # Component vars
 role_component:
@@ -75,18 +65,23 @@ role_component:
 
     configs:
       templates:
-        - polybar #  will search for template.polybar
-      variables:  # vars for template ~/dotfiles/polybar.ini
-        network_interface: wlan0
-        temperature:
-          base_temperature: 20
-          warn_temperature: 60
+        polybar:  # name of template. This should will be used in role_component.dunst.templates[]
+          template: "~/dotfiles/polybar.ini"   #  path to template
+          dest:     "~/.config/polybar.ini"    #  path there template should be rendered
+          variables:  # vars for template ~/dotfiles/polybar.ini
+            network_interface: wlan0
+            temperature:
+              base_temperature: 20
+              warn_temperature: 60
 
     run_configs:
       templates:
-        - run_polybar
-      variables:  # vars for template ~/.config/polybar.sh
-        display: 1
+        run_polybar:
+          template: "~/dotfiles/polybar.sh"
+          dest:     "~/.config/polybar.sh"
+          mode: 766  # optional file perms (allow to exec)
+          variables:  # vars for template ~/.config/polybar.sh
+            display: 1
 
     run:
       init: shell  # use shell and run entrypoint
@@ -140,11 +135,6 @@ role_component:
 
 `ansible group_vars/all/dunst.yml`
 ```yaml
-# Template vars
-templates:
-  dunst:  # name of template. This should will be used in role_component.dunst.templates[]
-    template: "~/dotfiles/dunstrc" #  path to template
-    config:   "~/dunst/dunstrc"    #  path there template should be rendered
 
 # Component vars
 role_component:
@@ -157,14 +147,16 @@ role_component:
 
     configs:
       templates:
-        - dunst #  will search for template.dunst
-      variables:  # vars for template ~/dotfiles/dunstrc
-        monitor: 4
-        geometry: "1870x1-25+7"
-        timeout:
-          low: 10
-          normal: 0
-          critical: 0
+        dunst:  # name of template. This should will be used in role_component.dunst.templates[]
+          template: "~/dotfiles/dunstrc" #  path to template
+          dest:     "~/dunst/dunstrc"    #  path there template should be rendered
+          variables:  # vars for template ~/dotfiles/dunstrc
+            monitor: 4
+            geometry: "1870x1-25+7"
+            timeout:
+              low: 10
+              normal: 0
+              critical: 0
       post:  # run post handler/command after template render
         - name: "kill dunst"
           shell: "pkill dunst || echo 'No running?'"
