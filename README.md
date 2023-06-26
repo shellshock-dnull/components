@@ -1,20 +1,28 @@
 [Ansible Role Components](https://galaxy.ansible.com/shellshock1953/components)
 =========
 
-Component-oriented ansible role. Allow quick and easy install, configure, and run common programs. Also, great tool to manage your .dotfiles via ansible.
+Component-oriented ansible role. Allow quick and easy install, configure, and run common programs.
+Also, great tool to manage your .dotfiles via ansible.
+
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/dnull-project/components/master.svg)](https://results.pre-commit.ci/latest/github/dnull-project/components/master)
 
 Idea
 --------------
 
-Main idea behind this role is to abstract installation and configuration of software by COMPONENTS. 
+Main idea behind this role is to abstract installation and configuration of software by COMPONENTS.
 
-What do we think about installing, for example [Polybar](https://github.com/polybar/polybar)? Polybar is status bar. OK! How do I start using Polybar? By installing, configuring and running it, of course . From now, lets make abstraction about Polybar as a **component**: 
-- install 
+What do we think about installing, for example [Polybar](https://github.com/polybar/polybar)?
+Polybar is status bar. OK! How do I start using Polybar? By installing, configuring and running it, of course.
+From now, lets make abstraction about Polybar as a **component**:
+
+- install
   Describes HOW we should install Polybar (by package 'polybar')
 - config
   Describes HOW we should configure Polybar. We'll create template called 'polybar', and provide vars to this template
 - run\_config
-  Same as config, but used to describe HOW we should run Polybar. Great idea create separate bash-script with everything needed to run Polybar. Yes, this is another template. It also can be useful for generating systemD configs, etc.
+  Same as config, but used to describe HOW we should run Polybar.
+  Great idea create separate bash-script with everything needed to run Polybar.
+  Yes, this is another template. It also can be useful for generating systemD configs, etc.
 - run
   Describes HOW we run Polybar (by exec config from run\_config).
 
@@ -22,9 +30,11 @@ Thats all You need to start using Polybar or ZSH, or Dunst, of Rofi, or wherever
 
 Example Playbook (Polybar)
 ----------------
-Real life usage can be found [here](https://gitlab.com/shellshock.dnull/ansible). 
+
+Real life usage can be found [here](https://gitlab.com/shellshock.dnull/ansible).
 
 `ansible playbook.yml`
+
 ```yaml
 - hosts: all
   gather_facts: true
@@ -35,6 +45,7 @@ Real life usage can be found [here](https://gitlab.com/shellshock.dnull/ansible)
 ```
 
 `ansible group_vars/all/polybar.yml`
+
 ```yaml
 role_component:
   components:
@@ -46,6 +57,7 @@ role_component:
 ```
 
 `ansible group_vars/all/polybar.yml`
+
 ```yaml
 
 # Component vars
@@ -56,11 +68,11 @@ role_component:
     install:
       packages:
         - polybar # install using default hosts package manager
-      virtualenv: ~/envs/py3    # path to virtualenv 
+      virtualenv: ~/envs/py3    # path to virtualenv
                                 # can be set as role_component.pip.virtualenv
                                 # default is omit
       pip:
-        - polybar-onlinestatus  # install additional packages 
+        - polybar-onlinestatus  # install additional packages
                                 # using pip
 
     configs:
@@ -85,11 +97,12 @@ role_component:
 
     run:
       init: shell  # use shell and run entrypoint
-      proc: 
+      proc:
         - ~/.config/polybar.sh # exec polybar.sh
 ```
 
 `short example of jinja template: "~/dotfiles/polybar.ini"`
+
 ```ini
 [module/speed]
 type = internal/network
@@ -103,6 +116,7 @@ warn-temperature = {{ var.temperature.warn_temperature }}
 ```
 
 `jinja template: "~/.config/polybar.sh"`
+
 ```bash
 #!/bin/bash
 export DISPLAY={{ var.display }}
@@ -114,9 +128,10 @@ echo "Polybar launched..."
 Another example Playbook (Dunst)
 ----------------
 
-Real life usage can be found [here](https://gitlab.com/shellshock.dnull/ansible). 
+Real life usage can be found [here](https://gitlab.com/shellshock.dnull/ansible).
 
 `ansible playbook.yml`
+
 ```yaml
 - hosts: all
   gather_facts: true
@@ -127,13 +142,15 @@ Real life usage can be found [here](https://gitlab.com/shellshock.dnull/ansible)
 ```
 
 `ansible group_vars/all/dunst.yml`
+
 ```yaml
 role_component:
   components:
-  - dunst 
+  - dunst
 ```
 
 `ansible group_vars/all/dunst.yml`
+
 ```yaml
 
 # Component vars
@@ -166,6 +183,7 @@ role_component:
 ```
 
 `jinja template: "~/dotfiles/dunstrc"`
+
 ```ini
 [global]
     monitor = {{ var.monitor }}
@@ -182,6 +200,7 @@ Role Variables
 --------------
 
 Default vars:
+
 ```yaml
 role_component:
   # when changing files, should role keeps file backups
