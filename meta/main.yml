@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: shellshock1953
   description: Component-oriented role
@@ -6,28 +7,17 @@ galaxy_info:
   license: Apache License, Version 2.0
   min_ansible_version: 2.7
   platforms:
-  - name: Alpine
-    versions:
-      - any
-  - name: Amazon Linux 2
-    versions:
-      - any
-  - name: Debian
-    versions:
-      - any
-  - name: FreeBSD
-    versions:
-      - any
-  - name: Ubuntu
-    versions:
-      - any
-  - name: SLES
-    versions:
-      - any
-  galaxy_tags:
-    - dotfiles
-    - install
-    - configure
-    - template
-    - execure
+    - name: Alpine
+      versions: [any]
+    - name: Amazon Linux 2
+      versions: [any]
+    - name: Debian
+      versions: [any]
+    - name: FreeBSD
+      versions: [any]
+    - name: Ubuntu
+      versions: [any]
+    - name: SLES
+      versions: [any]
+  galaxy_tags: [dotfiles, install, configure, template, execure]
 dependencies: []

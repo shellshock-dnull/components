@@ -23,7 +23,7 @@ scenario:
     - create
     - prepare
     - converge
-    # - idempotence # skip because brew installed bash script
+    # - idempotence  # skip because brew installed bash script
                     # which is always show "changed" state
     - side_effect
     - verify

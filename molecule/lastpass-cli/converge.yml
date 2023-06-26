@@ -5,11 +5,9 @@
   remote_user: root
   tasks:
     # TODO: resolve deps
-    - name: "Testing -- lastpass-cli"
+    - name: Testing -- lastpass-cli
       include_role:
         name: components
       vars:
         role_component:
-          components:
-            - brew
-            - lastpass-cli
+          components: [brew, lastpass-cli]

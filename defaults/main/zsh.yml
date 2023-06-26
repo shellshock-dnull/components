@@ -1,29 +1,27 @@
+---
 role_component:
   zsh:
     # TODO: --ignore-deps for molecule testing
-    deps:
-      - git
+    deps: [git]
     install:
-      packages:
-        - git
-        - zsh
+      packages: [git, zsh]
       pre:
-        - name: "ZSH Installing oh-my-zsh"
+        - name: ZSH Installing oh-my-zsh
           git:
             repo: https://github.com/robbyrussell/oh-my-zsh
             dest: ~/.oh-my-zsh
             depth: 1
             force: true
-        - name: "ZSH Change default shell"
+        - name: ZSH Change default shell
           become: true
           user:
             name: "{{ '{{' }} ansible_user {{ '}}' }}"
             shell: /usr/bin/zsh
           ignore_errors: true
-        - name: "ZSH Change plugins"
+        - name: ZSH Change plugins
           git:
             repo: "{{ '{{' }} item.repo  {{ '}}' }}"
-            dest: "~/.oh-my-zsh/custom/plugins/{{ '{{' }} item.plugin {{ '}}' }}"
+            dest: ~/.oh-my-zsh/custom/plugins/{{ '{{' }} item.plugin {{ '}}' }}
             depth: 1
           loop:
             - plugin: zsh-autosuggestions
@@ -34,7 +32,6 @@ role_component:
               repo: https://github.com/superbrothers/zsh-kubectl-prompt.git
             - repo: https://github.com/bilelmoussaoui/flatpak-zsh-completion
               plugin: flatpak
-
     configs:
       templates:
         zsh_theme:
@@ -60,7 +57,7 @@ role_component:
           dest: ~/.zshrc
           variables:
             startx: true
-            zsh_theme: dnull # agnoster
+            zsh_theme: dnull  # agnoster
             plugins:
               - git
               - kubectl
@@ -71,8 +68,7 @@ role_component:
               - flatpak
             local_vars:
               # - VENV=py3
-              - GPG_TTY=$(tty)
-
+[GPG_TTY=$(tty)]
             exports:
               - DEBFULLNAME="Bohdan Sukhomlinov"
               - DEBEMAIL="shellshock.dnull@gmail.com"
@@ -104,12 +100,8 @@ role_component:
               - HOSTALIASES=~/.hosts
               - RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
               - XDG_CONFIG_HOME=~/.config/
-
             scripts: []
-
-            bind_keys:
-              - bindkey '^ ' autosuggest-accept
-
+            bind_keys: [bindkey '^ ' autosuggest-accept]
             aliases:
               # - kubectl='minikube kubectl --'
               - vi='lvim'
@@ -143,12 +135,9 @@ role_component:
               - wezen='TERM=xterm-color ssh wezen'
             sources:
               # - ~/ENV/${VENV}/bin/activate
-              - ~/dNull/secrets/secrets.sh || echo -e "[.!]\tNo secrets found!"
+['~/dNull/secrets/secrets.sh || echo -e "[.!]\tNo secrets found!"']
             vault: []
-            evals:
-              - direnv hook zsh
-              - kubectl completion zsh
-            misc:
-              - unalias gr
+            evals: [direnv hook zsh, kubectl completion zsh]
+            misc: [unalias gr]
     run:
       init: none

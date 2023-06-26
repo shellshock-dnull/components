@@ -1,48 +1,45 @@
+---
 role_component:
   clipmenu:
-    name: "Clipmenu - Simple Clipboard Manager"
+    name: Clipmenu - Simple Clipboard Manager
     install:
       pre:
-        - name: "[clipmenu] deps"
+        - name: '[clipmenu] deps'
           package:
             name:
-            - build-essential
-            - git
-            - libxcursor-dev
-            - libxi-dev
-            - libxinerama-dev
-            - libxrandr-dev
-            - xsel
+              - build-essential
+              - git
+              - libxcursor-dev
+              - libxi-dev
+              - libxinerama-dev
+              - libxrandr-dev
+              - xsel
           become: true
       post:
-        - name: "[clipmenu] repo clipnotify"
+        - name: '[clipmenu] repo clipnotify'
           git:
-            repo: "https://github.com/cdown/clipnotify"
+            repo: https://github.com/cdown/clipnotify
             dest: /tmp/clipnotify/
             depth: 1
-        - name: "[clipmenu] repo clipmenu"
+        - name: '[clipmenu] repo clipmenu'
           git:
-            repo: "https://github.com/cdown/clipmenu"
+            repo: https://github.com/cdown/clipmenu
             dest: /tmp/clipmenu/
             depth: 1
-
         - block:
-          - name: "[clipmenu] install clipnotify"
-            shell: "make install"
-            args:
-              chdir: "/tmp/clipnotify"
-          - name: "[clipmenu] install clipmenu"
-            shell: "make install"
-            args:
-              chdir: "/tmp/clipmenu"
+            - name: '[clipmenu] install clipnotify'
+              shell: make install
+              args:
+                chdir: /tmp/clipnotify
+            - name: '[clipmenu] install clipmenu'
+              shell: make install
+              args:
+                chdir: /tmp/clipmenu
           become: true
-
-        - name: "[clipmenu] systemd user"
+        - name: '[clipmenu] systemd user'
           systemd:
             name: clipmenud
             state: started
-            enabled: yes
+            enabled: true
             scope: user
-          ignore_errors: yes # for molecule
-
-
+          ignore_errors: yes  # for molecule

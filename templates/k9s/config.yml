@@ -1,3 +1,4 @@
+---
 k9s:
   refreshRate: 2
   maxConnRetry: 5
@@ -15,8 +16,8 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: 
-  currentCluster: 
+  currentContext:
+  currentCluster:
   clusters:
   thresholds:
     cpu:

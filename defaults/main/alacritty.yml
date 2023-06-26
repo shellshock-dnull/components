@@ -1,24 +1,22 @@
-
+---
 role_component:
   alacritty:
-    name: "Alacritty - GPU Terminal"
+    name: Alacritty - GPU Terminal
     install:
       pre:
-        - name: "[alacritty] deps"
+        - name: '[alacritty] deps'
           package:
             name: "{{'{{'}} item {{'}}'}}"
             state: present
-          loop:
-            - cmake
-            - cargo
+          loop: [cmake, cargo]
           become: true
       post:
-        - name: "[alacritty] cargo install"
+        - name: '[alacritty] cargo install'
           shell: cargo install alacritty
     configs:
       templates:
         alacritty:
           template: alacritty.yml
-          dest: "~/.config/alacritty/alacritty.yml"
+          dest: ~/.config/alacritty/alacritty.yml
           variables:
             font_size: 10.0

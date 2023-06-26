@@ -1,21 +1,18 @@
+---
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
-    branches:
-      - master
-
+    branches: [master]
 jobs:
   brew:
     runs-on: ubuntu-latest
-    name: "component:brew"
+    name: component:brew
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          path: "${{ github.repository }}"
-          
+          path: ${{ github.repository }}
       - name: Molecule
         uses: gofrolist/molecule-action@v2
         with:

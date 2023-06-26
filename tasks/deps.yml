@@ -1,21 +1,19 @@
 ---
 # DEPS
 - block:
-  - set_fact:
-      deps_prefix: "{{ prefix }}[deps]"
-      deps:      "{{ depsList | default([]) }}"
-  - debug:
-      msg: "{{ depsList | to_nice_json }}"
-      verbosity: 2
-  - name: "{{ prefix }} checking deps"
-    stat:
-      path: "~/.dnull/{{ item }}"
-    with_items: "{{ deps }}"
-    register: ideps
-  - fail:
-      msg: "Dependency is not installed: {{ item.item }}"
-    when: item.stat.exists == false
-    with_items: "{{ ideps.results }}"
-  tags:
-  - plugin
-  - deps
+    - set_fact:
+        deps_prefix: '{{ prefix }}[deps]'
+        deps: '{{ depsList | default([]) }}'
+    - debug:
+        msg: '{{ depsList | to_nice_json }}'
+        verbosity: 2
+    - name: '{{ prefix }} checking deps'
+      stat:
+        path: ~/.dnull/{{ item }}
+      with_items: '{{ deps }}'
+      register: ideps
+    - fail:
+        msg: 'Dependency is not installed: {{ item.item }}'
+      when: item.stat.exists == false
+      with_items: '{{ ideps.results }}'
+  tags: [plugin, deps]

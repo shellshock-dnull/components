@@ -1,6 +1,6 @@
+---
 role_component:
   dmenu:
-    name: "dmenu"
+    name: dmenu
     install:
-      packages:
-        - dmenu
+      packages: [dmenu]

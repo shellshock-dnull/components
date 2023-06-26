@@ -1,14 +1,14 @@
-role_component:  
+---
+role_component:
   git:
     name: git
     install:
-      packages:
-        - git
+      packages: [git]
     configs:
       templates:
         gitconfig:
-          template: "gitconfig"
-          dest: "~/.gitconfig"
+          template: gitconfig
+          dest: ~/.gitconfig
           variables:
             aliases:
               - p = push

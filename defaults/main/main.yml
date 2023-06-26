@@ -1,37 +1,33 @@
+---
 # TODO: Escaping double curly braces in Ansible https://stackoverflow.com/questions/32279519/escaping-double-curly-braces-in-ansible
-
-
 tag: []
-output: ""
+output: ''
 # ROLE COMPONENT
 role_component:
   # pip:
   #   virtualenv: ""
   backup: true
-  render_dir: "{{ playbook_dir }}/component_rendered_tasks"
+  render_dir: '{{ playbook_dir }}/component_rendered_tasks'
   yaml_with_includes: true
-  force_restart:  false
-  ignore_errors:  true
-  user:   "{{ ansible_user }}"
-  group:  "{{ ansible_user }}"
-  mode:   644
-  run:    systemd
-
+  force_restart: false
+  ignore_errors: true
+  user: '{{ ansible_user }}'
+  group: '{{ ansible_user }}'
+  mode: 644
+  run: systemd
   components: []
-
   dummy:
-    name: "Dummy component - used for testing"
+    name: Dummy component - used for testing
     install:
       pre:
-        - name: "[dummy][install][pre] example"
+        - name: '[dummy][install][pre] example'
           debug:
-            msg: "Hello from install PRE"
-      packages:
-        - git
+            msg: Hello from install PRE
+      packages: [git]
       post:
-        - name: "[dummy][install][post] example"
+        - name: '[dummy][install][post] example'
           debug:
-            msg: "Hello from install POST"
+            msg: Hello from install POST
     configs:
       pre:
         - debug: msg="Hello from config PRE"

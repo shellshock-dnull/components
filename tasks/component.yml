@@ -1,47 +1,39 @@
+---
 - block:
-  - set_fact:
-      prefix: "[component][{{ name }}]"
-
-  - debug:
-      msg: "{{ componentObj| to_nice_json }}"
-      verbosity: 1
-
-  - include_tasks: render_dir.yml
-    tags: always
-  - file:
-      path: ~/.dnull
-      state: directory
-
-  - include_tasks: deps.yml
-    vars:
-      depsList: "{{ componentObj.deps | default({}) }}"
-    tags: deps 
-
-  - include_tasks: files.yml
-    vars:
-      filesObj: "{{ componentObj.files | default({}) }}"
-    tags: files
-
-  - include_tasks: install.yml
-    vars:
-      installObj: "{{ componentObj.install | default({}) }}"
-    tags: install
-
-  - include: configs.yml
-    vars:
-      configsObj: "{{ componentObj.configs | default({}) }}"
-    tags: configs
-
-  - include: run_configs.yml
-    vars:
-      runConfigsObj: "{{ componentObj.run_configs | default({}) }}"
-    tags: run_configs
-      
-  - include: run.yml
-    vars:
-      runObj: "{{ componentObj.run | default({}) }}"
-    tags: run
-
+    - set_fact:
+        prefix: '[component][{{ name }}]'
+    - debug:
+        msg: '{{ componentObj| to_nice_json }}'
+        verbosity: 1
+    - include_tasks: render_dir.yml
+      tags: always
+    - file:
+        path: ~/.dnull
+        state: directory
+    - include_tasks: deps.yml
+      vars:
+        depsList: '{{ componentObj.deps | default({}) }}'
+      tags: deps
+    - include_tasks: files.yml
+      vars:
+        filesObj: '{{ componentObj.files | default({}) }}'
+      tags: files
+    - include_tasks: install.yml
+      vars:
+        installObj: '{{ componentObj.install | default({}) }}'
+      tags: install
+    - include: configs.yml
+      vars:
+        configsObj: '{{ componentObj.configs | default({}) }}'
+      tags: configs
+    - include: run_configs.yml
+      vars:
+        runConfigsObj: '{{ componentObj.run_configs | default({}) }}'
+      tags: run_configs
+    - include: run.yml
+      vars:
+        runObj: '{{ componentObj.run | default({}) }}'
+      tags: run
   # - include_tasks:
   #     file: plugin.yml
   #   with_items: '{{ current_plugins }}'
@@ -51,13 +43,10 @@
   #     name: 'plugin {{ current_plugin }}'
   #     pluginObj: '{{ componentObj.plugins[current_plugin] }}'
   #   tags: plugins
-      
-  - name: "{{ prefix }}[deps] ~/.dnull/{{ name }}"
-    copy:
-      dest: "~/.dnull/{{ name }}"
-      content: |
-        {{ ansible_date_time.iso8601 }}
-    changed_when: False
-
+    - name: '{{ prefix }}[deps] ~/.dnull/{{ name }}'
+      copy:
+        dest: ~/.dnull/{{ name }}
+        content: |
+          {{ ansible_date_time.iso8601 }}
+      changed_when: false
   tags: role_component
-

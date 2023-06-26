@@ -1,7 +1,8 @@
 # 2023-06-??
+
 ## Version: 2.0
 
-### DEPRECATED:
+### DEPRECATED
 
 - `templates:` and it vars moved from top, level into
 `role_component.<component_name>.[config|run_config].template`,
@@ -9,7 +10,7 @@ and now look like this:
 
 ```yaml
 
-role_component:  
+role_component:
   git:
     configs:
       templates:
@@ -19,9 +20,10 @@ role_component:
           variables:
             foo: bar
 ```
+
 - `zip-configs` deleted
 
-### Changed:
+### Changed
 
 - component vars moved from playbook vars, into role defaults.
 Now, you can find them in [./defaults/main](./defaults/main)
@@ -29,7 +31,7 @@ Now, you can find them in [./defaults/main](./defaults/main)
 [component][<name>][<task>]
 - reduced number of debug messages
 
-### Added 
+### Added
 
 - install via Brew package manager:
 `role_component.<component_name>.install.brew=[]`
@@ -41,16 +43,21 @@ will be installed viw Brew
 - molecule tests
 
 ---
+
 # 2022-03-05
+
 ## Version: 1.0
 
 ### Basics
+
 What works:
+
 - install, pre, post
 - config, pre, post
 - run_config, pre, post
 - run - only basics
 
 What need to be upgraded:
+
 - run - more options
 - handlers - in config, run, across all pre and post

@@ -5,10 +5,9 @@
   remote_user: root
   tasks:
     # TODO: resolve deps
-    - name: "Testing -- dmenu"
+    - name: Testing -- dmenu
       include_role:
         name: components
       vars:
         role_component:
-          components:
-            - dmenu
+          components: [dmenu]

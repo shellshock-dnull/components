@@ -1,10 +1,10 @@
+---
 plugin:
   stern:
     shortCut: Ctrl-L
     confirm: false
-    description: "Logs <Stern>"
-    scopes:
-      - pods
+    description: Logs <Stern>
+    scopes: [pods]
     command: stern
     background: false
     args:

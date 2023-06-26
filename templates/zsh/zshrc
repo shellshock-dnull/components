@@ -15,7 +15,7 @@ plugins=(
 {% endfor %}
 )
 echo "[\t{{ var.plugins|length }}\t]\tOh-My-ZSH - plugins"
-source $ZSH/oh-my-zsh.sh 
+source $ZSH/oh-my-zsh.sh
 
 # Local Vars
 {% for local_var in var.local_vars %}
@@ -28,7 +28,7 @@ echo "[\t{{ var.local_vars|length }}\t]\tLocal Vars"
 export {{ export }}
 {% endfor %}
 echo -e "[\t{{ var.exports|length }}\t]\tExports"
- 
+
 # Auto Stuff
 {% for script in var.scripts %}
 {{ script }}
@@ -51,26 +51,26 @@ echo -e "[\tok\t]\tImport keys"
 {{ bind }}
 {% endfor %}
 echo -e "[\t{{ var.bind_keys|length}}\t]\tBind keys"
- 
+
 # ALIASES
 {% for alias in var.aliases %}
 alias {{ alias }}
 {% endfor %}
 echo -e "[\t{{ var.aliases|length }}\t]\tAliases"
- 
+
 {% for source in var.sources %}
 source {{ source }}
 {% endfor %}
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 echo -e "[\t{{ var.sources|length }}\t]\tSources"
- 
+
 {% if var.vault %}
 {% for vault in var.vault %}
 source {{ vault }}
 {% endfor %}
 echo -e "[\t{{ var.vault|length }}\t]\tVault"
-{% else %} 
+{% else %}
 echo -e "[\t--\t]\tNo Vault used"
 {% endif %}
 
@@ -87,7 +87,7 @@ fi
 eval "$({{ eval }})" || echo "cant eval {{ eval }}"
 {% endfor %}
 echo -e "[\t{{ var.evals|length }}\t]\tEvals"
-{% else %} 
+{% else %}
 echo -e "[\t--\t]\tNo Evals used"
 {% endif %}
 
@@ -95,7 +95,7 @@ echo -e "[\t--\t]\tNo Evals used"
 {{ misc }}
 {% endfor %}
 echo -e "[\t{{ var.misc|length }}\t]\tMisc"
- 
+
 source ~/.config/zsh/funcs
 echo -e "[\tok\t]\tCustom funcs"
 

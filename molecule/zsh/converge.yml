@@ -4,11 +4,11 @@
   gather_facts: true
   remote_user: root
   tasks:
-    - name: "Testing -- zsh"
+    - name: Testing -- zsh
       include_role:
         name: components
       vars:
         role_component:
           components:
-            - git # dep
+            - git  # dep
             - zsh

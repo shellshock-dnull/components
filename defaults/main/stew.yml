@@ -1,15 +1,16 @@
+---
 role_component:
   stew:
-    name: "Stew - An independent package manager for compiled binaries"
+    name: Stew - An independent package manager for compiled binaries
     install:
       pre:
         # - stat: path="~/.stew"
         #   register: stew_dir
-        - name: "[stew] dir"
+        - name: '[stew] dir'
           file:
             path: ~/.stew/bin
             state: directory
-        - name: "[stew] install binary"
+        - name: '[stew] install binary'
           # TODO: install on arm
           get_url:
             url: https://github.com/marwanhawari/stew/releases/download/{{ versions.stew }}/stew-linux-amd64
@@ -25,4 +26,3 @@ role_component:
     #           - 'junegunn/fzf@0.29.0'
     #           - 'git-time-metric/gtm@v1.3.5'
     #           - 'BurntSushi/ripgrep@13.0.0'
-

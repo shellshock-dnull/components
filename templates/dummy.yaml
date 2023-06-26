@@ -1,3 +1,4 @@
+---
 what:
   is:
-    foo: {{ var.foo }}
+    foo: {{★var.foo★: null}: null}

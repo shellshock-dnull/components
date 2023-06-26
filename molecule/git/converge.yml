@@ -4,10 +4,9 @@
   gather_facts: true
   remote_user: root
   tasks:
-    - name: "Testing -- git"
+    - name: Testing -- git
       include_role:
         name: components
       vars:
         role_component:
-          components:
-            - git
+          components: [git]
