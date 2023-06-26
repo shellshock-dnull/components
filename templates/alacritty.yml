@@ -238,7 +238,6 @@ colors:
     white: '0xeceff1'
 # Live config reload (changes require restart)
 # live_config_reload: true
-
 # Shell
 #
 # You can set `shell.program` to the path of your favorite shell, e.g. `/bin/fish`.

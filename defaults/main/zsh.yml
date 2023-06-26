@@ -66,9 +66,7 @@ role_component:
               - zsh-kubectl-prompt
               - asdf
               - flatpak
-            local_vars:
-              # - VENV=py3
-[GPG_TTY=$(tty)]
+            local_vars: [GPG_TTY=$(tty)]
             exports:
               - DEBFULLNAME="Bohdan Sukhomlinov"
               - DEBEMAIL="shellshock.dnull@gmail.com"
@@ -133,9 +131,7 @@ role_component:
               - sirius='TERM=xterm-color ssh sirius'
               - vega='TERM=xterm-color ssh vega'
               - wezen='TERM=xterm-color ssh wezen'
-            sources:
-              # - ~/ENV/${VENV}/bin/activate
-['~/dNull/secrets/secrets.sh || echo -e "[.!]\tNo secrets found!"']
+            sources: ['~/dNull/secrets/secrets.sh || echo -e "[.!]\tNo secrets found!"']
             vault: []
             evals: [direnv hook zsh, kubectl completion zsh]
             misc: [unalias gr]

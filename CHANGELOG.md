@@ -1,8 +1,10 @@
-# 2023-06-??
+# Changelog
 
-## Version: 2.0
+## 2023-06-??
 
-### DEPRECATED
+### Version: 2.0
+
+#### DEPRECATED
 
 - `templates:` and it vars moved from top, level into
 `role_component.<component_name>.[config|run_config].template`,
@@ -23,15 +25,15 @@ role_component:
 
 - `zip-configs` deleted
 
-### Changed
+#### Changed
 
 - component vars moved from playbook vars, into role defaults.
 Now, you can find them in [./defaults/main](./defaults/main)
 - refactored ansible messaged. Now they look like:
-[component][<name>][<task>]
+`[component][<name>][<task>]`
 - reduced number of debug messages
 
-### Added
+#### Added
 
 - install via Brew package manager:
 `role_component.<component_name>.install.brew=[]`
@@ -44,11 +46,11 @@ will be installed viw Brew
 
 ---
 
-# 2022-03-05
+## 2022-03-05
 
-## Version: 1.0
+### Version: 1.0
 
-### Basics
+#### Basics
 
 What works:
 
