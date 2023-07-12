@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  remote_user: root
+  tasks:
+    # TODO: resolve deps
+    - name: Testing -- nvim
+      include_role:
+        name: components
+      vars:
+        role_component:
+          components: [nvim]

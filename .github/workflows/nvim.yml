@@ -1,0 +1,23 @@
+---
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  nvim:
+    runs-on: ubuntu-latest
+    name: component:nvim
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ${{ github.repository }}
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2
+        with:
+          molecule_command: test
+          molecule_args: -d docker -s nvim
+          molecule_working_dir: dnull-project/components
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
