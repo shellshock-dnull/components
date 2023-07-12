@@ -16,7 +16,7 @@ role_component:
           become: true
           user:
             name: "{{ '{{' }} ansible_user {{ '}}' }}"
-            shell: /usr/bin/zsh
+            shell: /bin/zsh
           ignore_errors: true
         - name: ZSH Change plugins
           git:
@@ -91,7 +91,7 @@ role_component:
               - PATH="$PATH:$HOME/dNull/dnull"
               - PATH="$PATH:$HOME/.pulumi/bin"
               - PATH="$PATH:$HOME/.pub-cache/bin"
-              - SHELL=/usr/bin/zsh
+              - SHELL=/bin/zsh
               - SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
               - VAGRANT_HOME='~/.vagrant.d'
               - UES_LIB=~/dNull/ues.lib
