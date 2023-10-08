@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [master]
 jobs:
-  dmenu:
+  tests:
     runs-on: ubuntu-latest
     name: component:dmenu
     steps:

@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [master]
 jobs:
-  zsh:
+  tests:
     runs-on: ubuntu-latest
     name: component:zsh
     steps:

@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [master]
 jobs:
-  stew:
+  tests:
     runs-on: ubuntu-latest
     name: component:stew
     steps:

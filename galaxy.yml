@@ -1,0 +1,13 @@
+---
+namespace: dnull_project
+name: components
+version: 1.0.0
+readme: README.md
+authors:
+  - shellshock1953
+description: Component-oriented role
+license_file: LICENSE
+tags: [dotfiles, configure, template, install]
+repository: https://github.com/dnull-project/components
+documentation: https://github.com/dnull-project/components/blob/master/README.md
+issues: https://github.com/dnull-project/components/issues
