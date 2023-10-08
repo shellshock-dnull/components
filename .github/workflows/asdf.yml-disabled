@@ -21,6 +21,6 @@ jobs:
         with:
           molecule_command: test
           molecule_args: -d docker -s asdf
-          molecule_working_dir: dnull-project/components
+          molecule_working_dir: dnullproject/components
         env:
           ANSIBLE_FORCE_COLOR: '1'
