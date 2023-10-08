@@ -1,7 +1,7 @@
 ---
+name: Molecule:dmenu
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/dmenu.yml'
     - 'tasks/**'

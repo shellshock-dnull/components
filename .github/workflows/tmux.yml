@@ -1,7 +1,7 @@
 ---
+name: Molecule:tmux
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/tmux.yml'
     - 'tasks/**'

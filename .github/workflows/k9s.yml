@@ -1,7 +1,7 @@
 ---
+name: Molecule:k9s
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/k9s.yml'
     - 'tasks/**'
@@ -26,6 +26,6 @@ jobs:
         with:
           molecule_command: test
           molecule_args: -d docker -s k9s
-          molecule_working_dir: dnull-project/components
+          molecule_working_dir: dnullproject/components
         env:
           ANSIBLE_FORCE_COLOR: '1'

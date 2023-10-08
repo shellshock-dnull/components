@@ -1,7 +1,7 @@
 ---
+name: Molecule:zsh
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/zsh.yml'
     - 'tasks/**'

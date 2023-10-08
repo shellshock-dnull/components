@@ -1,7 +1,7 @@
 ---
+name: Molecule:nvim
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/nvim.yml'
     - 'tasks/**'

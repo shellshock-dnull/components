@@ -1,7 +1,7 @@
 ---
+name: Molecule:brew
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/brew.yml'
     - 'tasks/**'

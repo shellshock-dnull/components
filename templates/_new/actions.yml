@@ -1,7 +1,7 @@
 ---
+name: Molecule:COMPONENT_NAME
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/COMPONENT_NAME.yml'
     - 'tasks/**'

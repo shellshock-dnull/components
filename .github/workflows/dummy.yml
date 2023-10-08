@@ -1,7 +1,7 @@
 ---
+name: Molecule:dummy
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/dummy.yml'
     - 'tasks/**'

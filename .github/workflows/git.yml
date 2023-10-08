@@ -1,7 +1,7 @@
 ---
+name: Molecule:git
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/git.yml'
     - 'tasks/**'

@@ -1,7 +1,7 @@
 ---
+name: Molecule:stew
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/stew.yml'
     - 'tasks/**'

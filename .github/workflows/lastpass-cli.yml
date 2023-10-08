@@ -1,7 +1,7 @@
 ---
+name: Molecule:lastpass-cli
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/lastpass-cli.yml'
     - 'tasks/**'

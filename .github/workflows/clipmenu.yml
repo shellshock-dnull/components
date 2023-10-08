@@ -1,7 +1,7 @@
 ---
+name: Molecule:clipmenu
 on:
   push:
-    branches: [master]
     paths:
     - 'defaults/main/clipmenu.yml'
     - 'tasks/**'
