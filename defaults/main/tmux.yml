@@ -6,6 +6,7 @@ role_component:
       brew:
         - tmux
     configs:
-      pre: []
-      templates: []
-      post: []
+      templates:
+        main:
+          template: tmux.conf
+          dest: ~/.tmux.conf

@@ -3,7 +3,7 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/main/main/tmux.yml'
+    - 'defaults/main/tmux.yml'
     - 'tasks/**'
     - 'molecule/tmux/**'
   pull_request:
