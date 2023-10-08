@@ -2,8 +2,16 @@
 on:
   push:
     branches: [master]
+    paths:
+    - 'defaults/nvim.yml'
+    - 'tasks/**'
+    - 'molecule/nvim/**'
   pull_request:
     branches: [master]
+    paths:
+    - 'defaults/nvim.yml'
+    - 'tasks/**'
+    - 'molecule/nvim/**'
 jobs:
   tests:
     runs-on: ubuntu-latest

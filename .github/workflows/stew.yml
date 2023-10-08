@@ -2,8 +2,16 @@
 on:
   push:
     branches: [master]
+    paths:
+    - 'defaults/stew.yml'
+    - 'tasks/**'
+    - 'molecule/stew/**'
   pull_request:
     branches: [master]
+    paths:
+    - 'defaults/stew.yml'
+    - 'tasks/**'
+    - 'molecule/stew/**'
 jobs:
   tests:
     runs-on: ubuntu-latest

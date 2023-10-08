@@ -2,8 +2,16 @@
 on:
   push:
     branches: [master]
+    paths:
+    - 'defaults/clipmenu.yml'
+    - 'tasks/**'
+    - 'molecule/clipmenu/**'
   pull_request:
     branches: [master]
+    paths:
+    - 'defaults/clipmenu.yml'
+    - 'tasks/**'
+    - 'molecule/clipmenu/**'
 jobs:
   tests:
     runs-on: ubuntu-latest

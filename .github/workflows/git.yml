@@ -2,8 +2,16 @@
 on:
   push:
     branches: [master]
+    paths:
+    - 'defaults/git.yml'
+    - 'tasks/**'
+    - 'molecule/git/**'
   pull_request:
     branches: [master]
+    paths:
+    - 'defaults/git.yml'
+    - 'tasks/**'
+    - 'molecule/git/**'
 jobs:
   tests:
     runs-on: ubuntu-latest

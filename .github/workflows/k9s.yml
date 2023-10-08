@@ -2,8 +2,16 @@
 on:
   push:
     branches: [master]
+    paths:
+    - 'defaults/k9s.yml'
+    - 'tasks/**'
+    - 'molecule/k9s/**'
   pull_request:
     branches: [master]
+    paths:
+    - 'defaults/k9s.yml'
+    - 'tasks/**'
+    - 'molecule/k9s/**'
 jobs:
   tests:
     runs-on: ubuntu-latest
