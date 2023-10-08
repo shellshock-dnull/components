@@ -1,0 +1,17 @@
+---
+# tmux
+role_component:
+  tmux:
+    deps: []
+    install:
+      pre: []
+      packages: []
+      brew: []
+      post: []
+    configs:
+      pre: []
+      templates: []
+      # main:
+        # template: example/config.yml
+        # dest: ~/.config/example/config.yml
+      post: []
