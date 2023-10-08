@@ -1,5 +1,5 @@
 ---
-name: Molecule:git
+name: Molecule
 on:
   push:
     paths:

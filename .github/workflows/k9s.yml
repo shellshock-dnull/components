@@ -1,5 +1,5 @@
 ---
-name: Molecule:k9s
+name: Molecule
 on:
   push:
     paths:

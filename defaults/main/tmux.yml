@@ -7,7 +7,6 @@ role_component:
         - tmux
     configs:
       templates:
-        # main templates
         main:
           template: tmux.conf
           dest: ~/.tmux.conf

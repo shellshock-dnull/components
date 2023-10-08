@@ -1,5 +1,5 @@
 ---
-name: Molecule:dmenu
+name: Molecule
 on:
   push:
     paths:

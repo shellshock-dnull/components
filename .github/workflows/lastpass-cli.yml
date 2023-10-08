@@ -1,5 +1,5 @@
 ---
-name: Molecule:lastpass-cli
+name: Molecule
 on:
   push:
     paths:

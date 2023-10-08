@@ -1,5 +1,5 @@
 ---
-name: Molecule:dummy
+name: Molecule
 on:
   push:
     paths:

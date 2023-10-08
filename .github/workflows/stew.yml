@@ -1,5 +1,5 @@
 ---
-name: Molecule:stew
+name: Molecule
 on:
   push:
     paths:

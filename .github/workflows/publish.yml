@@ -1,11 +1,9 @@
 ---
 name: Deploy Collection
-
 on:
   release:
     types:
       - published
-
 jobs:
   deploy:
     runs-on: ubuntu-latest

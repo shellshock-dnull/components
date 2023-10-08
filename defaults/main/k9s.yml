@@ -1,5 +1,4 @@
 ---
-# TODO: support multi-arch
 role_component:
   k9s:
     # deps:

@@ -1,5 +1,5 @@
 ---
-name: Molecule:brew
+name: Molecule
 on:
   push:
     paths:

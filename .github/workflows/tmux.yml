@@ -1,5 +1,5 @@
 ---
-name: Molecule:tmux
+name: Molecule
 on:
   push:
     paths:
