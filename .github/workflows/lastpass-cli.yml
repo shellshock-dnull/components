@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/lastpass-cli.yml'
+    - 'defaults/main/lastpass-cli.yml'
     - 'tasks/**'
     - 'molecule/lastpass-cli/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/lastpass-cli.yml'
+    - 'defaults/main/lastpass-cli.yml'
     - 'tasks/**'
     - 'molecule/lastpass-cli/**'
 jobs:

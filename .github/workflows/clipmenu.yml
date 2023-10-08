@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/clipmenu.yml'
+    - 'defaults/main/clipmenu.yml'
     - 'tasks/**'
     - 'molecule/clipmenu/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/clipmenu.yml'
+    - 'defaults/main/clipmenu.yml'
     - 'tasks/**'
     - 'molecule/clipmenu/**'
 jobs:

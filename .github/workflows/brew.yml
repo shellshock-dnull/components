@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/brew.yml'
+    - 'defaults/main/brew.yml'
     - 'tasks/**'
     - 'molecule/brew/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/brew.yml'
+    - 'defaults/main/brew.yml'
     - 'tasks/**'
     - 'molecule/brew/**'
 jobs:

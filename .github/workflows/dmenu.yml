@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/dmenu.yml'
+    - 'defaults/main/dmenu.yml'
     - 'tasks/**'
     - 'molecule/dmenu/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/dmenu.yml'
+    - 'defaults/main/dmenu.yml'
     - 'tasks/**'
     - 'molecule/dmenu/**'
 jobs:

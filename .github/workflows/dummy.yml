@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/dummy.yml'
+    - 'defaults/main/dummy.yml'
     - 'tasks/**'
     - 'molecule/dummy/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/dummy.yml'
+    - 'defaults/main/dummy.yml'
     - 'tasks/**'
     - 'molecule/dummy/**'
 jobs:

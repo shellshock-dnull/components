@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/zsh.yml'
+    - 'defaults/main/zsh.yml'
     - 'tasks/**'
     - 'molecule/zsh/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/zsh.yml'
+    - 'defaults/main/zsh.yml'
     - 'tasks/**'
     - 'molecule/zsh/**'
 jobs:

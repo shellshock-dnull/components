@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/tmux.yml'
+    - 'defaults/main/main/tmux.yml'
     - 'tasks/**'
     - 'molecule/tmux/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/tmux.yml'
+    - 'defaults/main/tmux.yml'
     - 'tasks/**'
     - 'molecule/tmux/**'
 jobs:

@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/git.yml'
+    - 'defaults/main/git.yml'
     - 'tasks/**'
     - 'molecule/git/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/git.yml'
+    - 'defaults/main/git.yml'
     - 'tasks/**'
     - 'molecule/git/**'
 jobs:

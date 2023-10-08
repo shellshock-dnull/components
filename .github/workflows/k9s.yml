@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/k9s.yml'
+    - 'defaults/main/k9s.yml'
     - 'tasks/**'
     - 'molecule/k9s/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/k9s.yml'
+    - 'defaults/main/k9s.yml'
     - 'tasks/**'
     - 'molecule/k9s/**'
 jobs:

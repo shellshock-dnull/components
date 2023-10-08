@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/COMPONENT_NAME.yml'
+    - 'defaults/main/COMPONENT_NAME.yml'
     - 'tasks/**'
     - 'molecule/COMPONENT_NAME/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/COMPONENT_NAME.yml'
+    - 'defaults/main/COMPONENT_NAME.yml'
     - 'tasks/**'
     - 'molecule/COMPONENT_NAME/**'
 jobs:

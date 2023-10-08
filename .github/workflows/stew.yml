@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/stew.yml'
+    - 'defaults/main/stew.yml'
     - 'tasks/**'
     - 'molecule/stew/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/stew.yml'
+    - 'defaults/main/stew.yml'
     - 'tasks/**'
     - 'molecule/stew/**'
 jobs:

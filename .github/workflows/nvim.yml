@@ -3,13 +3,13 @@ on:
   push:
     branches: [master]
     paths:
-    - 'defaults/nvim.yml'
+    - 'defaults/main/nvim.yml'
     - 'tasks/**'
     - 'molecule/nvim/**'
   pull_request:
     branches: [master]
     paths:
-    - 'defaults/nvim.yml'
+    - 'defaults/main/nvim.yml'
     - 'tasks/**'
     - 'molecule/nvim/**'
 jobs:
