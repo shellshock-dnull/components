@@ -10,4 +10,6 @@
         name: components
       vars:
         role_component:
-          components: [tmux]
+          components:
+            - git
+            - tmux
