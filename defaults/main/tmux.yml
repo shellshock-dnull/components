@@ -5,6 +5,13 @@ role_component:
     install:
       brew:
         - tmux
+        - tmuxinator
+      post:
+        - name: "[tmux][install] Tmux Plugin Manager"
+          git:
+            repo: https://github.com/tmux-plugins/tpm
+            dest: ~/.tmux/plugins/tpm
+            depth: 1
     configs:
       templates:
         main:
