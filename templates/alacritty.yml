@@ -1,6 +1,6 @@
 ---
 env:
-  TERM: xterm-256color
+  TERM: {{ var.term }}
 window:
   padding:
     x: 0

@@ -33,3 +33,4 @@ role_component:
           variables:
             font_size: 10.0
             font: "Iosevka Term"
+            term: xterm-256color
