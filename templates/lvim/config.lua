@@ -65,7 +65,7 @@ lvim.plugins = {
   },
   { 'projekt0n/caret.nvim' },
   { 'christoomey/vim-tmux-navigator' },
-  { 'dracula/vim' }
+  { 'Mofiqul/dracula.nvim' }
 }
 lvim.colorscheme = "dracula"
 
