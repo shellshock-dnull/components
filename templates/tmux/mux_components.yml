@@ -1,0 +1,12 @@
+---
+name: component
+root: ~/
+attach: false
+windows:
+  - component:
+    - export ACTIONS=<%= @settings["actions"] %>
+    - export COMPONENTS=<%= @settings["components"] %>
+    - export HOSTS=<%= @settings["hosts"] %>
+    - bash ~/dnull/dnull/utils/components_run.sh
+    - sleep 20
+    - exit

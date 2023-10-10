@@ -1,0 +1,6 @@
+---
+name: dotfiles
+root: ~/dnull/dotfiles/
+windows:
+  - editor:
+    - export COMPONENTS=<%= @settings["components"] %> &&  export HOSTS=<%= @settings["hosts"] %> && lvim -O ~/dnull/ansible/external_roles/components/defaults/main/${COMPONENTS}.yml ~/dnull/ansible/host_vars/${HOSTS}.yml

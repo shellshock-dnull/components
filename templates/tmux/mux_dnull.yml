@@ -1,0 +1,6 @@
+---
+name: dnull
+root: ~/dnull
+windows:
+  - editor: lvim
+  - shell: /bin/zsh

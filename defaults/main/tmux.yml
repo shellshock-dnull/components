@@ -14,6 +14,17 @@ role_component:
             depth: 1
     configs:
       templates:
-        main:
-          template: tmux.conf
+        # main tmux config
+        tmux_conf:
+          template: tmux/tmux.conf
           dest: ~/.tmux.conf
+        # tmuxinator configs
+        mux_components:
+          template: tmux/mux_components.yml
+          dest: ~/.config/tmuxinator/component.yml
+        mux_dnull:
+          template: tmux/mux_dnull.yml
+          dest: ~/.config/tmuxinator/dnull.yml
+        mux_dotfiles:
+          template: tmux/mux_dotfiles.yml
+          dest: ~/.config/tmuxinator/dotfiles.yml
