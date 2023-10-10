@@ -6,7 +6,7 @@ output: ''
 role_component:
   # pip:
   #   virtualenv: ""
-  backup: true
+  backup: false
   render_dir: '{{ playbook_dir }}/component_rendered_tasks'
   yaml_with_includes: true
   force_restart: false
@@ -32,7 +32,7 @@ role_component:
       pre:
         - debug: msg="Hello from config PRE"
       templates:
-        dummy:
+       dummy:
           template: dummy.yaml
           dest: ~/.config/dummy.yaml
           # group: staff
