@@ -2,10 +2,10 @@ role_component:
   lvim:
     # https://www.lunarvim.org/docs/installation
     name: "LunarVIM"
-    deps:
-        # git, make, pip, python npm, node and cargo
-      - asdf
-      - nvim
+    # deps:
+      # git, make, pip, python npm, node and cargo
+      # - asdf
+      # - nvim
     # install:
     #   pre:
     #     - name: "[lvim] Install via official install script"
