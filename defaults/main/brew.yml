@@ -17,7 +17,7 @@ role_component:
             mode: '0770'
         - name: '[brew] run install script'
           shell: /bin/bash /tmp/install.sh
-          become: true
+          become: false
       post:
         - name: '[brew] version'
           shell: /home/linuxbrew/.linuxbrew/bin/brew --version

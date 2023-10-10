@@ -23,5 +23,4 @@
           vars:
             name: '{{ current_component }}'
             componentObj: '{{ role_component[current_component] }}'
-          tags: [files, install, configs, run_configs, run, plugins]
-  tags: role_component
+      tags: [files, install, configs, run_configs, run, plugins]
