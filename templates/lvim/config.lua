@@ -64,25 +64,25 @@ lvim.plugins = {
     end
   },
   { 'projekt0n/caret.nvim' },
-  { 'christoomey/vim-tmux-navigator' }
+  { 'christoomey/vim-tmux-navigator' },
+  { 'dracula/vim' }
 }
--- lvim.colorscheme = "shine"
--- lvim.colorscheme = "tokyonight-day"
+lvim.colorscheme = "dracula"
 
-local auto_dark_mode = require('auto-dark-mode')
-
-auto_dark_mode.setup({
-  update_interval = 1000,
-  set_dark_mode = function()
-    vim.api.nvim_set_option('background', 'dark')
-    vim.cmd('colorscheme caret')
-  end,
-  set_light_mode = function()
-    vim.api.nvim_set_option('background', 'light')
-    vim.cmd('colorscheme caret')
-  end,
-})
-auto_dark_mode.init()
+-- Change theme based on Mac settings
+-- local auto_dark_mode = require('auto-dark-mode')
+-- auto_dark_mode.setup({
+--   update_interval = 1000,
+--   set_dark_mode = function()
+--     vim.api.nvim_set_option('background', 'dark')
+--     vim.cmd('colorscheme caret')
+--   end,
+--   set_light_mode = function()
+--     vim.api.nvim_set_option('background', 'light')
+--     vim.cmd('colorscheme caret')
+--   end,
+-- })
+-- auto_dark_mode.init()
 
 vim.opt.cmdheight = 1             -- more space in the neovim command line for displaying messages
 vim.opt.guifont = "monospace:h17" -- the font used in graphical neovim applications
