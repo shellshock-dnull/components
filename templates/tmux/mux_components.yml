@@ -7,6 +7,6 @@ windows:
     - export ACTIONS=<%= @settings["actions"] %>
     - export COMPONENTS=<%= @settings["components"] %>
     - export HOSTS=<%= @settings["hosts"] %>
-    - bash ~/dnull/dnull/utils/components_run.sh
+    - bash ~/dnull/ansible/components.sh run
     - sleep 20
     - exit
