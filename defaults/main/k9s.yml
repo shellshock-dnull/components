@@ -50,3 +50,6 @@ role_component:
         plugin:
           template: k9s/plugin.yml
           dest: ~/.config/k9s/plugin.yml
+        skin:
+          template: k9s/skin.yml
+          dest: ~/.config/k9s/skin.yml
