@@ -86,15 +86,15 @@ role_component:
               - PATH="$PATH:$HOME/.stew/bin"
               - PATH="$PATH:$HOME/install/flutter/bin"
               # - PATH="$PATH:$HOME/ENV/${VENV}/bin"
-              - PATH="$PATH:$HOME/dNull/ues.lib"
-              - PATH="$PATH:$HOME/dNull/ues.utils"
-              - PATH="$PATH:$HOME/dNull/dnull"
+              # - PATH="$PATH:$HOME/dnull/ues.lib"
+              # - PATH="$PATH:$HOME/dnull/ues.utils"
+              # - PATH="$PATH:$HOME/dnull/dnull"
               - PATH="$PATH:$HOME/.pulumi/bin"
               - PATH="$PATH:$HOME/.pub-cache/bin"
               - SHELL=/bin/zsh
               - SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
               - VAGRANT_HOME='~/.vagrant.d'
-              - UES_LIB=~/dNull/ues.lib
+              # - UES_LIB=~/dnull/ues.lib
               - KUBECONFIG="${HOME}/.kube/config"
               - HOSTALIASES=~/.hosts
               - RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
@@ -128,8 +128,7 @@ role_component:
               - maciar='TERM=xterm-color ssh maciar'
               - gitroot='cd $(git rev-parse --show-toplevel)'
               - mux='tmuxinator'
-              - ii='/bin/bash ~/dnull/dnull/utils/components_dmenu.sh'
-            sources: ['~dNull/secrets/secrets.sh || echo -e "[.!]\tNo secrets found!"']
+            sources: []
             vault: []
             evals:
               - direnv hook zsh

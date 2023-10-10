@@ -1,0 +1,7 @@
+---
+# direnv
+role_component:
+  direnv:
+    install:
+      brew:
+        - direnv
