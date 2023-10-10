@@ -103,25 +103,17 @@ role_component:
             bind_keys:
               - bindkey '^ ' autosuggest-accept
             aliases:
-              # - kubectl='minikube kubectl --'
               - vi='lvim'
-              - clock='tty-clock -C 4 -b -x -n'
               - c='xclip'
               - digs='dig +short'
               - display_off='xset dpms force off'
-              # - ekeys='vi ~/.config/sxhkd/sxhkdrc'
-              # - ekitty='vi ~/.config/kitty/kitty.conf'
-              - f='ranger'
               - g_pass='pwgen 15 | head -n1 | cut -d " " -f1 | c'
               - get_ip='wget -qO- https://ipecho.net/plain ; echo'
               - k='kubectl'
               - p='ping i.ua'
               - s='systemctl'
               - tf='terraform'
-              # - venv_2='source ~/ENV/2/bin/activate'
-              # - venv_3='source ~/ENV/py3/bin/activate'
               - music='spt'
-              - ask='tuxi'
               - altair='TERM=xterm-color ssh altair'
               - mira='TERM=xterm-color ssh mira'
               - prima='TERM=xterm-color ssh prima'
@@ -133,7 +125,11 @@ role_component:
               - sirius='TERM=xterm-color ssh sirius'
               - vega='TERM=xterm-color ssh vega'
               - wezen='TERM=xterm-color ssh wezen'
-            sources: ['~/dNull/secrets/secrets.sh || echo -e "[.!]\tNo secrets found!"']
+              - maciar='TERM=xterm-color ssh maciar'
+              - gitroot='cd $(git rev-parse --show-toplevel)'
+              - mux='tmuxinator'
+              - ii='/bin/bash ~/dnull/dnull/utils/components_dmenu.sh'
+            sources: ['~dNull/secrets/secrets.sh || echo -e "[.!]\tNo secrets found!"']
             vault: []
             evals:
               - direnv hook zsh

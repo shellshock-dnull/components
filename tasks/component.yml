@@ -2,15 +2,14 @@
 - block:
     - set_fact:
         prefix: '[component][{{ name }}]'
+      tags: always
     - debug:
         msg: '{{ componentObj| to_nice_json }}'
         verbosity: 1
+      tags: always
     - include_tasks: render_dir.yml
       tags: always
-    - file:
-        path: ~/.dnull
-        state: directory
-      tags: always
+
     - include_tasks: deps.yml
       vars:
         depsList: '{{ componentObj.deps | default({}) }}'
@@ -44,10 +43,3 @@
   #     name: 'plugin {{ current_plugin }}'
   #     pluginObj: '{{ componentObj.plugins[current_plugin] }}'
   #   tags: plugins
-    - name: '{{ prefix }}[deps] ~/.dnull/{{ name }}'
-      copy:
-        dest: ~/.dnull/{{ name }}
-        content: |
-          {{ ansible_date_time.iso8601 }}
-      changed_when: false
-  tags: [files, install, configs, run_configs, run, plugins]

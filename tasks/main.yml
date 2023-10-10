@@ -1,26 +1,25 @@
 ---
 - block:
-    - block:
-        - name: '[global] component facts'
-          set_fact:
-            current_components: '{{ role_component.components }}'
-    # - name: "[global] plugin facts"
-    #   set_fact:
-    #     current_plugins: '{% if plugins is defined %}{{ plugins }}{% else
-    #       | default({}) }}{% endif %}'
-        - name: '[global] ROLE COMPONENT - next components will be installed and
-            configured on'
-          debug:
-            msg: '{{ current_components }}'
-            verbosity: 1
-      tags: always
-    - block:
-        - name: '[global] components'
-          include_tasks: component.yml
-          with_items: '{{ current_components }}'
-          loop_control:
-            loop_var: current_component
-          vars:
-            name: '{{ current_component }}'
-            componentObj: '{{ role_component[current_component] }}'
-      tags: [files, install, configs, run_configs, run, plugins]
+  - name: '[global] component facts'
+    set_fact:
+      current_components: '{{ role_component.components }}'
+    tags: always
+  # - name: "[global] plugin facts"
+  #   set_fact:
+  #     current_plugins: '{% if plugins is defined %}{{ plugins }}{% else
+  #       | default({}) }}{% endif %}'
+  - name: '[global] ROLE COMPONENT - next components will be installed and
+      configured on'
+    debug:
+      msg: '{{ current_components }}'
+      verbosity: 1
+    tags: always
+  - name: '[global] components'
+    include_tasks: component.yml
+    with_items: '{{ current_components }}'
+    loop_control:
+      loop_var: current_component
+    vars:
+      name: '{{ current_component }}'
+      componentObj: '{{ role_component[current_component] }}'
+    tags: [files, install, configs, run_configs, run, plugins]

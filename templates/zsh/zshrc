@@ -99,9 +99,9 @@ echo -e "[\t{{ var.misc|length }}\t]\tMisc"
 source ~/.config/zsh/funcs
 echo -e "[\tok\t]\tCustom funcs"
 
-echo -e "[\tdone\t]\tInit new console done"
-
+echo -e "[\tok\t]\tCustom loads"
 source ~/dNull/ues.lib/dnull.sh
 dnull.load
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+echo -e "[\tdone\t]\tInit new console done"
