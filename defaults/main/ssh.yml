@@ -5,21 +5,21 @@ role_component:
     install:
       packages: [] # usually already installed
     configs:
-      templates:
-        main: # <-- Main Config. Here for includes only
-          template: ssh
-          dest: ~/.ssh/config
-          variables:
-            include:
-              - ~/.ssh/example/*
-        example_ssh: # <-- Project related config
-          template: ssh
-          dest: ~/.ssh/example/config
-          variables:
-            hosts:
-              - name: github
-                update_key: no
-              # - name: example
-              #   host: example.com
-              #   user: ubuntu
-              #   key: ~/.ssh/ubuntu.key
+      templates: []
+        # main: # <-- Main Config. Here for includes only
+        #   template: ssh
+        #   dest: ~/.ssh/config
+        #   variables:
+        #     include:
+        #       - ~/.ssh/example/config
+        # example_ssh: # <-- Project related config
+        #   template: ssh
+        #   dest: ~/.ssh/example/config
+        #   variables:
+        #     hosts:
+        #       - name: github
+        #         update_key: no
+        #       - name: example
+        #         host: example.com
+        #         user: ubuntu
+        #         key: ~/.ssh/ubuntu.key
