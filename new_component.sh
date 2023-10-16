@@ -32,7 +32,7 @@ function create_defaults {
   if [[ "$(uname -o)" == "Darwin" ]]; then
     sed -i '' "s/COMPONENT_NAME/${COMPONENT}/g" "${FILENAME}"
   else
-    sed -i '' "s/COMPONENT_NAME/${COMPONENT}/g" "${FILENAME}"
+    sed -i "s/COMPONENT_NAME/${COMPONENT}/g" "${FILENAME}"
   fi
 }
 

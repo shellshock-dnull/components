@@ -13,7 +13,7 @@
         template_backup: '{{template.value.backup| default(role_component.backup)}}'
         template_become: '{{template.value.become| default(false)}}'
         var: '{{template.value.variables|default({})}}'
-    - name: '{{ template_prefix }}{{ template.key }} dest folder'
+    - name: '{{ template_prefix }}[{{ template.key }}] dest folder'
       file:
         path: '{{ template.value.dest | dirname }}'
         state: directory

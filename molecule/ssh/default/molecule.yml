@@ -1,0 +1,16 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: ubuntu_2004
+    image: mpaivabarbosa/molecule-systemd-ubuntu:20.04
+    pre_build_image: true
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      hash_behaviour: merge
+verifier:
+  name: ansible
