@@ -4,6 +4,12 @@ role_component:
     name: git
     install:
       packages: [git]
+      post:
+        - name: "[git] brew install lazygit"
+          brew:
+            name: lazygit
+            state: present
+          ignore_errors: true # now critical if this will not be installed
     configs:
       templates:
         gitconfig:
