@@ -5,9 +5,9 @@
   remote_user: root
   tasks:
     # TODO: resolve deps
-    - name: Testing -- dummy
+    - name: Testing -- COMPONENT_NAME
       include_role:
         name: components
       vars:
         role_component:
-          components: [dummy]
+          components: [COMPONENT_NAME]
