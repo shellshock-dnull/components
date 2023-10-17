@@ -17,6 +17,8 @@ role_component:
             mode: '0770'
         - name: '[brew] run install script'
           shell: /bin/bash /tmp/install.sh
+          environment:
+            NONINTERACTIVE: 1
           become: false
       post:
         - name: '[brew] version'

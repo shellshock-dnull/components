@@ -10,6 +10,11 @@ role_component:
             path: /tmp/k9s
             state: directory
 
+        - name: '[k9s] creating ~/.local/bin/'
+          file:
+            path: ~/.local/bin
+            state: directory
+
           # Linux
         - name: '[k9s] Download binary for Linux'
           unarchive:
@@ -34,6 +39,13 @@ role_component:
               environment:
                 PATH: /opt/homebrew/bin:$PATH
           when: ansible_distribution == 'MacOSX'
+
+        - name: "[k9s] move k9s binary into ~/.local/bin"
+          copy:
+            src: /tmp/k9s/k9s
+            dest: ~/.local/bin/
+            remote_src: True
+
     configs:
       pre:
         - name: '[k9s] config dir'
