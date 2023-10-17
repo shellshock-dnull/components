@@ -94,3 +94,6 @@ vim.opt.wrap = true               -- wrap lines
 -- use treesitter folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+lvim.builtin.which_key.mappings["P"] = {
+  "<cmd>lua require'telescope'.extensions.projects.projects{}<CR>", "Projects"
+}
