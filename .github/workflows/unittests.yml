@@ -17,7 +17,7 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    name: component:unittests
+    name: unittests
     steps:
       - name: Checkout
         uses: actions/checkout@v2
