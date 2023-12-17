@@ -11,27 +11,27 @@
       vars:
         role_component:
           components: [unittests]
-        unittests:
-          name: unittests
-          install:
-            pre:
-              - name: "[unittests] running pre"
-                file:
-                  path: ~/.unittests
-                  state: directory
-            packages: [git]
-            post:
-              - name: "[unittests] running post"
-                copy:
-                  content: ""
-                  dest: ~/.unittests/file
-                  force: false
-          configs:
-            templates:
-              # TODO: modes
-              unittestsconfig:
-                template: unittests/unitconfig
-                dest: ~/.unittests/config
-                variables:
-                  unitkey: "SUCCESS"
-          # TODO: add run section
+          unittests:
+            name: unittests
+            install:
+              pre:
+                - name: "[unittests] running pre"
+                  file:
+                    path: ~/.unittests
+                    state: directory
+              packages: [git]
+              post:
+                - name: "[unittests] running post"
+                  copy:
+                    content: ""
+                    dest: ~/.unittests/file
+                    force: false
+            configs:
+              templates:
+                # TODO: modes
+                unittestsconfig:
+                  template: unittests/unitconfig
+                  dest: ~/.unittests/config
+                  variables:
+                    unitkey: "SUCCESS"
+            # TODO: add run section
