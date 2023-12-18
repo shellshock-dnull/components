@@ -14,15 +14,15 @@
       vars:
         installObj: '{{ pluginObj.install | default({}) }}'
     - name: '{{ plugin_prefix }} configs'
-      include: configs.yml
+      include_tasks: configs.yml
       vars:
         configsObj: '{{ pluginObj.configs | default({}) }}'
     - name: '{{ plugin_prefix }} RunConfigs'
-      include: run_configs.yml
+      include_tasks: run_configs.yml
       vars:
         runConfigsObj: '{{ pluginObj.run_configs | default({}) }}'
     - name: '{{ plugin_prefix }} run'
-      include: run.yml
+      include_tasks: run.yml
       vars:
         runObj: '{{ pluginObj.run | default({}) }}'
   tags: [plugins]

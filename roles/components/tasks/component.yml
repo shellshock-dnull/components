@@ -22,15 +22,15 @@
       vars:
         installObj: '{{ componentObj.install | default({}) }}'
       tags: install
-    - include: configs.yml
+    - include_tasks: configs.yml
       vars:
         configsObj: '{{ componentObj.configs | default({}) }}'
       tags: configs
-    - include: run_configs.yml
+    - include_tasks: run_configs.yml
       vars:
         runConfigsObj: '{{ componentObj.run_configs | default({}) }}'
       tags: run_configs
-    - include: run.yml
+    - include_tasks: run.yml
       vars:
         runObj: '{{ componentObj.run | default({}) }}'
       tags: run
