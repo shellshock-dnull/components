@@ -2,6 +2,7 @@
 name: components:molecule
 on:
   push:
+    branches: [main]
     paths:
     - 'roles/components/defaults/**'
     - 'roles/components/tasks/**'
