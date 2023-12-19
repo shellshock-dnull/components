@@ -15,7 +15,7 @@ role_component:
           shell: cargo install alacritty
           # - name: "[alacritty] cp into /usr/bin/alacritty"
           #   # TODO: use ansible module instead
-          #   # shell: sudo cp ~/.cargo/bin/alacritty /usr/bin/alacritty 
+          #   # shell: sudo cp ~/.cargo/bin/alacritty /usr/bin/alacritty
           #   # become: true
     configs:
       pre:
