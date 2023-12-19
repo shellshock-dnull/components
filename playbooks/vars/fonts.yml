@@ -1,0 +1,11 @@
+---
+role_component:
+  fonts:
+    install:
+      pre:
+        - name: "[Fonts] TODO: replaced with https://www.lunarvim.org/docs/configuration/nerd-fonts"
+          shell: "echo https://www.lunarvim.org/docs/configuration/nerd-fonts"
+        - name: "fc-cache"
+          command: fc-cache -f ~/.local/share/fonts
+    run:
+      init: none

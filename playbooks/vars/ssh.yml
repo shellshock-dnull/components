@@ -1,0 +1,25 @@
+---
+# ssh
+role_component:
+  ssh:
+    install:
+      packages:
+        - openssh-server
+    configs:
+      templates:
+        ssh_include:
+          template: ssh
+          dest: ~/.ssh/config
+          variables:
+            include: []
+              # - ~/.ssh/example/config
+        ssh:
+          template: ssh
+          dest: ~/.ssh/example/config
+          variables:
+            hosts:
+              - name: example
+                host: example.com
+                user: u0_a130
+                port: 8022
+                key: ~/.ssh/key.ssh

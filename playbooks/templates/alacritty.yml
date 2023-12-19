@@ -1,0 +1,83 @@
+---
+env:
+  TERM: {{ var.term }}
+window:
+  padding:
+    x: 0
+    y: 0
+  dynamic_padding: false
+  decorations: none
+  title: Alacritty
+  class:
+    instance: Alacritty
+    general: Alacritty
+scrolling:
+  history: 5000
+font:
+  normal:
+    family: {{ var.font }}
+    style: Regular
+  bold:
+    family: {{ var.font }}
+    style: Bold
+  italic:
+    family: {{ var.font }}
+    style: Italic
+  bold_italic:
+    family: {{ var.font }}
+    style: Bold Italic
+  size: {{ var.font_size }}
+  offset:
+    x: 0
+    y: 0
+draw_bold_text_with_bright_colors: true
+# Colors (https://terminal.sexy/#JjI47O_xJjI4_5gAi8NK_8EHA6n06R5jAJaIz9jcN0dP_6dNnMxl_6AAgdT6rRRXJqaa7O_x)
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x263238'
+#     foreground: '0xeceff1'
+#
+#   # Normal colors
+#   normal:
+#     black: '0x263238'
+#     red: '0xff9800'
+#     green: '0x8bc34a'
+#     yellow: '0xffc107'
+#     blue: '0x03a9f4'
+#     magenta: '0xe91e63'
+#     cyan: '0x009688'
+#     white: '0xcfd8dc'
+#
+#   # Bright colors
+#   bright:
+#     black: '0x37474f'
+#     red: '0xffa74d'
+#     green: '0x9ccc65'
+#     yellow: '0xffa000'
+#     blue: '0x81d4fa'
+#     magenta: '0xad1457'
+#     cyan: '0x26a69a'
+#     white: '0xeceff1'
+live_config_reload: true
+key_bindings:
+    # (Windows, Linux, and BSD only)
+  - {key: V, mods: Control|Shift, action: Paste}
+  - {key: C, mods: Control|Shift, action: Copy}
+  - {key: Insert, mods: Shift, action: PasteSelection}
+  - {key: Key0, mods: Control, action: ResetFontSize}
+  - {key: Equals, mods: Control, action: IncreaseFontSize}
+  - {key: Plus, mods: Control, action: IncreaseFontSize}
+  - {key: Minus, mods: Control, action: DecreaseFontSize}
+  - {key: Minus, mods: Control, action: DecreaseFontSize}
+  - {key: F11, mods: None, action: ToggleFullscreen}
+  - {key: Paste, mods: None, action: Paste}
+  - {key: Copy, mods: None, action: Copy}
+  - {key: L, mods: Control, action: ClearLogNotice}
+  - {key: L, mods: Control, chars: "\f"}
+  - {key: PageUp, mods: None, action: ScrollPageUp, mode: ~Alt}
+  - {key: PageDown, mods: None, action: ScrollPageDown, mode: ~Alt}
+  - {key: Home, mods: Shift, action: ScrollToTop, mode: ~Alt}
+  - {key: End, mods: Shift, action: ScrollToBottom, mode: ~Alt}
+import:
+  - ~/.config/alacritty/themes/dracula/dracula.yml

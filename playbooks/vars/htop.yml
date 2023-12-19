@@ -1,0 +1,12 @@
+---
+# htop
+role_component:
+  htop:
+    install:
+      packages:
+        - htop
+    configs:
+      templates:
+        main:
+          template: htop
+          dest: ~/.config/htop/htoprc
