@@ -13,7 +13,6 @@
       - ansible.builtin.include_role:
           name: components
       tags: [files, install, configs, run_configs, run, plugins]
-
       # Additionally post results into ntfy
       # - uri:
       #     url: "https://ntfy.sh/change_me"
