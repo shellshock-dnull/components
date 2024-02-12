@@ -1,0 +1,8 @@
+role_component:
+  nvim:
+    name: "NeoVIM"
+    # deps:
+    # - brew
+    install:
+      brew:
+        - nvim

@@ -1,0 +1,52 @@
+---
+- hosts: all
+  gather_facts: true
+  collections:
+    - dnullproject.collections
+  tasks:
+    - block:
+      - include_vars:
+          dir: vars
+          extensions:
+            - 'yml'
+            - 'yaml'
+      - ansible.builtin.include_role:
+          name: components
+        vars:
+          role_component:
+            components:
+              - alacritty
+              - asdf
+              - brew
+              - clipmenu
+              - direnv
+              - dmenu
+              - fonts
+              - git
+              - htop
+              - k9s
+              - lastpass_cli
+              - lvim
+              - minikube
+              - nvim
+              - ssh
+              - stew
+              - tmux
+              - versions
+              - zsh
+      tags: [files, install, configs, run_configs, run, plugins]
+      # Additionally post results into ntfy
+      # - uri:
+      #     url: "https://ntfy.sh/change_me"
+      #     method: POST
+      #     body: "{{ inventory_hostname }} components: finished"
+      #   tags: [files, install, configs, run_configs, run, plugins]
+      # rescue:
+      # - uri:
+      #     url: "https://ntfy.sh/change_me"
+      #     method: POST
+      #     body: "{{ inventory_hostname }} components: failed"
+      #   tags: [files, install, configs, run_configs, run, plugins]
+      # - fail:
+      #     msg: "exit non-zero"
+      #   tags: [files, install, configs, run_configs, run, plugins]

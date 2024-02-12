@@ -1,0 +1,40 @@
+---
+role_component:
+  alacritty:
+    name: Alacritty - GPU Terminal
+    install:
+      pre:
+        - name: '[alacritty] deps'
+          package:
+            name: "{{'{{'}} item {{'}}'}}"
+            state: present
+          loop: [cmake, cargo]
+          become: true
+      post:
+        - name: '[alacritty][install] cargo install'
+          shell: cargo install alacritty
+          # - name: "[alacritty] cp into /usr/bin/alacritty"
+          #   # TODO: use ansible module instead
+          #   # shell: sudo cp ~/.cargo/bin/alacritty /usr/bin/alacritty
+          #   # become: true
+    configs:
+      pre:
+        - name: '[alacritty][install] themes dir'
+          file:
+            path: ~/.config/alacritty/themes
+            state: directory
+        - name: '[alacritty][install] themes'
+          git:
+            repo: https://github.com/dracula/alacritty
+            dest: ~/.config/alacritty/themes/dracula
+            # They changed yaml to toml
+            version: 18353e319fada1e33c20b3dae840f9ce6eeede5d # pragma: allowlist secret
+            depth: 1
+      templates:
+        alacritty:
+          template: alacritty.yml
+          dest: ~/.config/alacritty/alacritty.yml
+          variables:
+            font_size: 10.0
+            font: "Iosevka Term"
+            term: xterm-256color

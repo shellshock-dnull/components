@@ -1,0 +1,98 @@
+echo "[\t--\t] Init new console"
+
+# Oh-My-ZSH
+export ZSH=$HOME/.oh-my-zsh
+ZSH_THEME="{{ var.zsh_theme }}"
+plugins=(
+{% for plugin in var.plugins %}
+    {{ plugin }}
+{% endfor %}
+)
+echo "[\t{{ var.plugins|length }}\t]\tOh-My-ZSH - plugins"
+source $ZSH/oh-my-zsh.sh
+
+# Local Vars
+{% for local_var in var.local_vars %}
+{{ local_var }}
+{% endfor %}
+echo "[\t{{ var.local_vars|length }}\t]\tLocal Vars"
+
+# Exports
+{% for export in var.exports %}
+export {{ export }}
+{% endfor %}
+echo -e "[\t{{ var.exports|length }}\t]\tExports"
+
+# Auto Stuff
+{% for script in var.scripts %}
+{{ script }}
+{% endfor %}
+echo -e "[\t{{ var.scripts|length }}\t]\tScripts"
+# Prevent gnome keyboard to override system one
+
+# Imports
+echo "- gpg-agent is connected to $GPG_TTY"
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+  eval `ssh-agent`
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+ssh-add -l > /dev/null || ssh-add
+echo -e "[\tok\t]\tImport keys"
+
+# Bind Keys
+{% for bind in var.bind_keys %}
+{{ bind }}
+{% endfor %}
+echo -e "[\t{{ var.bind_keys|length}}\t]\tBind keys"
+
+# ALIASES
+{% for alias in var.aliases %}
+alias {{ alias }}
+{% endfor %}
+echo -e "[\t{{ var.aliases|length }}\t]\tAliases"
+
+{% for source in var.sources %}
+source {{ source }}
+{% endfor %}
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+echo -e "[\t{{ var.sources|length }}\t]\tSources"
+
+{% if var.vault %}
+{% for vault in var.vault %}
+source {{ vault }}
+{% endfor %}
+echo -e "[\t{{ var.vault|length }}\t]\tVault"
+{% else %}
+echo -e "[\t--\t]\tNo Vault used"
+{% endif %}
+
+{% if var.startx %}
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+  echo "Startin X"
+  sleep 2
+  exec startx
+fi
+{% endif %}
+
+{% if var.evals %}
+{% for eval in var.evals %}
+eval "$({{ eval }})" || echo "cant eval {{ eval }}"
+{% endfor %}
+echo -e "[\t{{ var.evals|length }}\t]\tEvals"
+{% else %}
+echo -e "[\t--\t]\tNo Evals used"
+{% endif %}
+
+{% for misc in var.misc %}
+{{ misc }}
+{% endfor %}
+echo -e "[\t{{ var.misc|length }}\t]\tMisc"
+
+source ~/.config/zsh/funcs
+echo -e "[\tok\t]\tCustom funcs"
+
+echo -e "[\tok\t]\tCustom loads"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+echo -e "[\tdone\t]\tInit new console done"

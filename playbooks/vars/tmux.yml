@@ -1,0 +1,20 @@
+---
+# tmux
+role_component:
+  tmux:
+    install:
+      brew:
+        - tmux
+        - tmuxinator
+      post:
+        - name: "[tmux][install] Tmux Plugin Manager"
+          git:
+            repo: https://github.com/tmux-plugins/tpm
+            dest: ~/.tmux/plugins/tpm
+            depth: 1
+    configs:
+      templates:
+        # main tmux config
+        tmux_conf:
+          template: tmux/tmux.conf
+          dest: ~/.tmux.conf

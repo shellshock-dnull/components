@@ -1,0 +1,7 @@
+[user]
+    email = {{ var.email }}
+    name =  {{ var.name }}
+[alias]
+{% for alias in var.aliases %}
+    {{ alias }}
+{% endfor %}

@@ -1,0 +1,10 @@
+role_component:
+  minikube:
+    install:
+      pre:
+        - name: "[minikube] download"
+          # TODO: aarch
+          shell: "cd /tmp && curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
+        - name: "[minikube] download"
+          shell: install -m 755 /tmp/minikube /usr/local/bin/
+          become: true

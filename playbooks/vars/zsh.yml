@@ -1,0 +1,86 @@
+---
+role_component:
+  zsh:
+    # TODO: --ignore-deps for molecule testing
+    deps: [git]
+    install:
+      packages: [git, zsh]
+      pre:
+        - name: ZSH Installing oh-my-zsh
+          git:
+            repo: https://github.com/robbyrussell/oh-my-zsh
+            dest: ~/.oh-my-zsh
+            depth: 1
+            force: true
+        - name: ZSH Change default shell
+          become: true
+          user:
+            name: "{{ '{{' }} ansible_user {{ '}}' }}"
+            shell: /bin/zsh
+          ignore_errors: true
+        - name: ZSH Change plugins
+          git:
+            repo: "{{ '{{' }} item.repo  {{ '}}' }}"
+            dest: ~/.oh-my-zsh/custom/plugins/{{ '{{' }} item.plugin {{ '}}' }}
+            depth: 1
+          loop:
+            - plugin: zsh-autosuggestions
+              repo: https://github.com/zsh-users/zsh-autosuggestions
+            - plugin: zsh-syntax-highlighting
+              repo: https://github.com/zsh-users/zsh-syntax-highlighting
+            - plugin: zsh-kubectl-prompt
+              repo: https://github.com/superbrothers/zsh-kubectl-prompt.git
+            - repo: https://github.com/bilelmoussaoui/flatpak-zsh-completion
+              plugin: flatpak
+    configs:
+      templates:
+        zsh_theme:
+          template: zsh/zshrc
+          dest: ~/.zshrc
+          variables:
+            startx: true
+            zsh_theme: agnoster
+            plugins:
+              - git
+              - kubectl
+              - zsh-autosuggestions
+              - zsh-syntax-highlighting
+              - zsh-kubectl-prompt
+              - asdf
+              - flatpak
+            local_vars:
+              - GPG_TTY=$(tty)
+            exports:
+              - DISABLE_UPDATE_PROMPT=true
+              - EDITOR=lvim
+              - GPG_TTY
+              - HISTTIMEFORMAT="%d/%m/%y %T "
+              - HOSTALIASES=~/.hosts
+              - LANG=en_US.UTF-8
+              - LC_ALL=en_US.UTF-8
+              - PASSWORD_STORE_CLIP_TIME=180
+              - PATH="$PATH:/snap/bin"
+              - PATH="$PATH:$HOME/bin"
+              - PATH="$PATH:$HOME/go/bin"
+              - PATH="$PATH:$HOME/.local/bin"
+              - PATH="$PATH:$HOME/.stew/bin"
+              - PATH="$PATH:$HOME/install/flutter/bin"
+              - SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+              - VAGRANT_HOME='~/.vagrant.d'
+              - KUBECONFIG="${HOME}/.kube/config"
+              - HOSTALIASES=~/.hosts
+              - RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+              - XDG_CONFIG_HOME=~/.config/
+            scripts: []
+            bind_keys:
+              - bindkey '^ ' autosuggest-accept
+            aliases: []
+            sources: []
+            vault: []
+            evals:
+              - direnv hook zsh
+              - kubectl completion zsh
+            misc:
+              - unalias gr
+    run:
+      init: none

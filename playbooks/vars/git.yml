@@ -1,0 +1,31 @@
+---
+role_component:
+  git:
+    name: git
+    install:
+      packages: [git]
+      post:
+        - name: "[git] brew install lazygit"
+          community.general.homebrew:
+            name: lazygit
+            state: present
+          ignore_errors: true # now critical if this will not be installed
+    configs:
+      templates:
+        gitconfig:
+          template: gitconfig
+          dest: ~/.gitconfig
+          variables:
+            email: ""
+            name: ""
+            aliases:
+              - p = push
+              - st = status -sb
+              - ll = log --oneline
+              - last = log -1 HEAD --stat
+              - cm = commit -m
+              - rv = remote -v
+              - d = diff
+              - dv = difftool -t vimdiff -y
+              - gl = config --global -l
+              - se = !git rev-list --all | xargs git grep -F

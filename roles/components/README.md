@@ -1,13 +1,13 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
 =========
 
-[Ansible Role Components](https://galaxy.ansible.com/shellshock1953/components)
+[Ansible Role Components](https://galaxy.ansible.com/dnullproject/components)
 =========
 
 Component-oriented ansible role. Allow quick and easy install, configure, and run common programs.
 Also, great tool to manage your .dotfiles via ansible.
 
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/dnull-project/components/master.svg)](https://results.pre-commit.ci/latest/github/dnull-project/components/master)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/dnullproject/components/master.svg)](https://results.pre-commit.ci/latest/github/dnullproject/components/master)
 
 Idea
 --------------
@@ -33,8 +33,6 @@ Thats all You need to start using Polybar or ZSH, or Dunst, of Rofi, or wherever
 
 Example Playbook (Polybar)
 ----------------
-
-Real life usage can be found [here](https://gitlab.com/shellshock.dnull/ansible).
 
 `ansible playbook.yml`
 
@@ -130,8 +128,6 @@ echo "Polybar launched..."
 
 Another example Playbook (Dunst)
 ----------------
-
-Real life usage can be found [here](https://gitlab.com/shellshock.dnull/ansible).
 
 `ansible playbook.yml`
 

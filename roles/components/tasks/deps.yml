@@ -9,7 +9,7 @@
         verbosity: 2
     - name: '{{ prefix }} checking deps'
       stat:
-        path: ~/.dnull/{{ item }}
+        path: ~/.components/{{ item }}
       with_items: '{{ deps }}'
       register: ideps
     - fail:
